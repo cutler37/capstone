@@ -12,7 +12,10 @@ import adminAccess from '../images/assignAdminAccess.png'
 import getAccessKeys from '../images/getAccesskeys.png'
 import awsConfigure from '../images/awsconfigure.png'
 import directory from '../images/directory.png'
-
+import envVar from '../images/envVars.png'
+import envVarPath from '../images/envVarsPath.png'
+import envVarPathEdit from '../images/envVarsPathEdit.png'
+import terraformInit from '../images/terraforminit.png'
 function App() {
 
   const data = {url:"src/components/download.txt",filename: "download.txt"}
@@ -33,6 +36,25 @@ function App() {
           <p>
             1) To begin this setup. You will need to download <a href="https://www.terraform.io/" target="_blank">Terraform</a>. Go to this website and download Terraform for your device. The Terraform Download page is found here: <a href="https://www.terraform.io/downloads">https://www.terraform.io/downloads</a>
           </p>
+          
+        </Col>
+      </Row>
+      <Row>
+        <Col md='6'>
+          <p>
+            1a) You will probably need to add the terraform executable to your system "PATH" environment variables. You can do this on Windows by searching for environment variables on your Windows search window. Click edit on user variables while clicking on path. Then select new and paste the path to the folder containing the terraform executable. The following pictures help demonstrate the process.
+          </p>
+        </Col>
+        <Col md='6'>
+          <img width='90%' height = '90%' src={envVar}></img>
+        </Col>
+      </Row>
+      <Row>
+        <Col md='6'>
+          <img width='90%' height = '90%' src={envVarPath}></img>
+        </Col>
+        <Col md='6'>
+          <img width='90%' height = '90%' src={envVarPathEdit}></img> 
         </Col>
       </Row>
       <Row>
@@ -197,7 +219,7 @@ function App() {
           </p>    
         </Col>
         <Col md='6'>
-          <img width='100%' src={directory}></img> 
+          <img width='100%' src={terraformInit}></img> 
         </Col>
       </Row>
       <Row>
@@ -254,16 +276,26 @@ stopEC2Lambda status.json</li>
               <a href="https://victorleungtw.medium.com/install-ubuntu-desktop-on-aws-instance-with-chrome-remote-desktop-3beb30755379">https://victorleungtw.medium.com/install-ubuntu-desktop-on-aws-instance-with-chrome-remote-desktop-3beb30755379</a>
             </li>
             <li>
-              <a href=""></a>
+              <a href="https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-2-install-gui/">https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-2-install-gui/</a>
             </li>
           </ul>
         </p>
       </Row>
       <Row>
         <p>
-          13) Connect to AWS Kali using Chrome Remote Desktop:
-          
+          12a) Setting up via Chrome desktop connect(recommended):
+          <br></br>
+          We recommend following the tutorial on the link below. You can skip the first step as your aws instance has already been set up. In addition, step 8 in the tutorial is not necessary for your desktop connection to work.             
         </p>
+        <a href="https://victorleungtw.medium.com/install-ubuntu-desktop-on-aws-instance-with-chrome-remote-desktop-3beb30755379">https://victorleungtw.medium.com/install-ubuntu-desktop-on-aws-instance-with-chrome-remote-desktop-3beb30755379</a>
+      </Row>
+      <Row>
+        <p>
+          12a) Setting up GUI via TigerVNC:
+          <br></br>
+          This is amazon's solution to creating a gui for amazon instances. It       
+        </p>
+        <a href="https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-2-install-gui/">https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-2-install-gui/</a>
       </Row>
     </Container>
   );

@@ -5,9 +5,7 @@ function SelectionForm () {
     const [formValue, setFormValue] = useState({
         offVM: "Kali Linux",
         vulVM: "Metasploitable2",
-        region: "us-east-1",
         size: "t2.micro",
-        subnet: "10.0.0.0/16",
     });
     
     const handleChange = (event) => {
@@ -27,12 +25,9 @@ function SelectionForm () {
 
     function download (event) {
       const configJSONfile = {
-        "awsRegion":region,
-        "region":region,
         "size":size,
         "off":offVM,
         "vuln":vulVM,
-        "subnet":subnet
       }
       event.preventDefault();
       // Prepare the file
@@ -62,20 +57,11 @@ function SelectionForm () {
           <input type="radio" name="vulVM" value="Metasploitable2" onChange={handleChange}/>Metasploitable 2 [Recommended]<br/>
           <input type="radio" name="vulVM" value="Earth" onChange={handleChange}/>Earth<br/>
           <br></br>
-          <label>III) What region do you want to host your Virtual Machines? Remember, costs on AWS vary based on region.</label><br></br>
-          <input type="radio" name="region" value="us-east-2" onChange={handleChange}/>us-east-2<br/>
-          <input type="radio" name="region" value="us-east-1" onChange={handleChange}/>us-east-1 [Recommended]<br/>
-          <input type="radio" name="region" value="us-west-1" onChange={handleChange}/>us-west-1<br/>
-          <br></br>
           <label>IV) What size do you want you're Offensive Virtual Machine to be? Remember the larger the size the more AWS charges you. We won't charge anything. t2.micro is under free tier; however, it may not run like you want.</label><br></br>
           <input type="radio" name="size" value="t2.micro" onChange={handleChange}/>t2.micro (1 vCPU 1 GiB)<br/>
           <input type="radio" name="size" value="t2.medium" onChange={handleChange}/>t2.medium (2 vCPU 4 GiB) [Recommended]<br/>
           <input type="radio" name="size" value="t2.large" onChange={handleChange}/>t2.large (2 vCPU 8 GiB)<br/>
           <input type="radio" name="size" value="t2.xlarge" onChange={handleChange}/>t2.xlarge (4 vCPU 16 GiB)<br/>
-          <br></br>
-          <label>V) What CIDR notation would you like to use and place your Virtual Machines within.</label><br></br>
-          <input type="radio" name="subnet" value="10" onChange={handleChange}/>10.0.0.0/16 [Recommended]<br/>
-          <input type="radio" name="subnet" value="172" onChange={handleChange}/>172.0.0.0/16<br/>
           <br></br>
           
       </form>
