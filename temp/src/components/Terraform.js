@@ -169,14 +169,14 @@ function App() {
       <br></br>
       <Row>  
         <p>
-          4) Now that the setup of AWS and TerraForm is complete, you will need the two files in which to launch the aws environment from. The vulnInfrastructure.zip file that contains the code to launch the VMs in the AWS environment and the variables.json that tells the script what machines and other settings you'd like to use in your virtual environment. You can download the default script and variables below. However, if you want to create a different environment than provided utilize the form in step 5 to create your own variables.json file. If you just want to use the tested and recommended settings, skip step 5 and download the scripts provided below.
+          4) Now that the setup of AWS and TerraForm is complete, you will need the two files in which to launch the aws environment from. The vulnInfrastructure.zip file that contains the code to launch the VMs in the AWS environment and the variables.json that tells the script what machines and other settings you'd like to use in your virtual environment. You can download the default script and variables below. However, if you want to create a different environment than provided utilize the form in step 5 to create your own variables.json file. If you just want to use the tested and recommended settings, skip step 5 and download the scripts provided below. If you utilize other VMs remember that this tutorial may not be able to help you as it is made to specifically install and run Kali.
         </p>
       </Row>
       <Row>
-        <Col md='2'>
-          <Link to="/downloads/variables.json" target="_blank" download>vulnInfrastructure.zip</Link>
+        <Col md='6'>
+          <Link to="/downloads/vulnInfrastructure.zip" target="_blank" download>vulnInfrastructure.zip</Link>
         </Col>
-        <Col md='2'>
+        <Col md='6'>
           <Link to="/downloads/variables.json" target="_blank" download>variables.json</Link>
         </Col>
       </Row>   
@@ -236,22 +236,37 @@ function App() {
       <Row>
         <br></br>
         <p>
-          10) After waiting a few minutes for the environment to deploy, make sure you have the following new files 'id_rsa', and ipAddresses. The id_rsa is the private key of the keypair that you will use to connect with your Kali instance. to your Kali instance. Be sure to update your kali with the following commands: ADD COMMANDS HERE @@@@@@@@@@@@@@@@@
-        </p>    
+          10) After waiting a few minutes for the environment to deploy, make sure you have the following new files 'id_rsa', and ipAddresses. The id_rsa is the private key of the keypair that you will use to connect with your Kali instance. You will do this the first time using SSH. Make sure that your command line is in the same file as the id_rsa file. Then use the following command: "ssh -i 'id_rsa' kali@(replace with static IP address found in the ipAddresses file)"
+        </p> 
+        <p>
+          The Kali instance on AWS is not completely configured. In fact tools on this image is quite sparse to allow for customization and reduced image size. In order to to update kali and download missing tools you will need to run a few commands. These commands can take several minutes to run:
+          <ul>
+            <li>I) sudo apt update</li>
+            <li>II) sudo apt full-upgrade -y</li>
+            <li>III) sudo apt install -y linux-headers-5.7.0-kali3-cloud-amd64</li>
+            <li>IV) sudo reboot -f</li>
+            <li>V)  sudo apt install -y nvidia-driver nvidia-cuda-toolkit</li>
+            <li>VI) sudo reboot -f</li>
+          </ul>
+          <br></br>
+          For additional help go to the kali documentation <a href='https://www.kali.org/docs/cloud/aws/'>here</a>.
+        </p>   
         <p>
           You can now begin to perform penetration tests on your fellow metasploitable machines using the private ip addresses found in the ipAddresses file. There are lots of websites to help you do this. Here are just a few helpers:
         </p>
         <a href="https://www.udemy.com/course/learn-hacking-10-windows-using-metasploit-from-scratch/">https://www.udemy.com/course/learn-hacking-10-windows-using-metasploit-from-scratch/</a>
         <a href="https://www.offensive-security.com/metasploit-unleashed/">https://www.offensive-security.com/metasploit-unleashed/</a>
         <a href="https://docs.rapid7.com/metasploit/metasploitable-2-exploitability-guide/">https://docs.rapid7.com/metasploit/metasploitable-2-exploitability-guide/</a>
+        <br></br>
+        <br></br>
       </Row>
       <Row>
         <p>
           11) CLOSING: Here is a list of all necessary and unnecessary commands to help you manage your terraform instances:
           <ul>
-            <li>a) terraform apply -destroy: destroys all infrastructure created by the terraform script.</li>
-            <li>b) terraform init: initilizes states (first command that needs to be run)</li>
-            <li>c) terraform apply: build terraform infrastructure</li>
+            <li>a) terraform init: initilizes states (first command that needs to be run).</li>
+            <li>b) terraform apply: build terraform infrastructure.</li>
+            <li>c) terraform apply -destroy: destroys all infrastructure created by the terraform script.</li>
           </ul>
           <br></br>
           In addition to deploying your Kali ec2 instances. This script deploys two simple lambda functions that help you to manage your ec2 instances. You can call function 'a' below to start your ec2 instances and look at its status in the status.json file at the end. Likewise for function 'b' you can use that command to temporarily stop your terraform ec2 instances (not destroy).
@@ -283,17 +298,18 @@ stopEC2Lambda status.json</li>
       </Row>
       <Row>
         <p>
-          12a) Setting up via Chrome desktop connect(recommended):
+          12a) Setting up via Chrome desktop connect (recommended):
           <br></br>
           We recommend following the tutorial on the link below. You can skip the first step as your aws instance has already been set up. In addition, step 8 in the tutorial is not necessary for your desktop connection to work.             
         </p>
         <a href="https://victorleungtw.medium.com/install-ubuntu-desktop-on-aws-instance-with-chrome-remote-desktop-3beb30755379">https://victorleungtw.medium.com/install-ubuntu-desktop-on-aws-instance-with-chrome-remote-desktop-3beb30755379</a>
+        <br></br>
       </Row>
       <Row>
         <p>
-          12a) Setting up GUI via TigerVNC:
+          12b) Setting up GUI via TigerVNC:
           <br></br>
-          This is amazon's solution to creating a gui for amazon instances. It       
+          This is amazon's solution to creating a gui for amazon instances.       
         </p>
         <a href="https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-2-install-gui/">https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-2-install-gui/</a>
       </Row>

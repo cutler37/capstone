@@ -39,25 +39,19 @@ variable "EC2_USER" {
 locals {
   ################ Import variables ###############
   local_data = jsondecode(file("/variables.json"))
-  
+
+  ################ VULN AMI #######################
+  VULN_BOX = "${local.local_data.vuln == "Metasploitable 2" ? "ami-03ea1121e147b22b9" : ""}"
+  VULN_BOX_1 = "${local.local_data.vuln == "OWASP Juice Box" ? "ami-0cea98c1668042d67" : ""}"
+  VULN_BOX_2 = "${local.local_data.vuln == "DVWA-Application-Demo" ? "ami-0631939d90aa6e6d1" : ""}"
+  VULN_BOX_3 = "${local.local_data.vuln == "Metasploitable 3" ? "ami-0b49e298407cf1e17" : ""}"
+  VULN_BOX_AMI = "${coalesce(local.VULN_BOX,local.VULN_BOX_1, local.VULN_BOX_2,local.VULN_BOX_3)}"
+
   ################ KALI AMI ######################
-  KALI_EAST_1 = "${local.local_data.awsRegion == "us-east-1" ? "ami-06fd113e1286dd166" : ""}"
-  KALI_EAST_2 = "${local.local_data.awsRegion == "us-east-2" ? "ami-0d12596b1b9089744" : ""}"
-  KALI_WEST_1 = "${local.local_data.awsRegion == "us-west-1" ? "ami-0e58e6da772372235" : ""}"
-  KALI_AMI = "${coalesce(local.KALI_EAST_1,local.KALI_EAST_2, local.KALI_WEST_1)}"
-
-  ################ META2 AMI ######################
-  META_2_EAST_1 = "${local.local_data.awsRegion == "us-east-1" ? "ami-03ea1121e147b22b9" : ""}"
-  META_2_EAST_2 = "${local.local_data.awsRegion == "us-east-2" ? "" : ""}"
-  META_2_WEST_1 = "${local.local_data.awsRegion == "us-west-1" ? "" : ""}"
-  META_2_AMI = "${coalesce(local.META_2_EAST_1,local.META_2_EAST_2, local.META_2_WEST_1)}"
-
-  ################ META3 AMI ######################
-  META_3_EAST_1 = "${local.local_data.awsRegion == "us-east-1" ? "ami-03ea1121e147b22b9" : ""}"
-  META_3_EAST_2 = "${local.local_data.awsRegion == "us-east-2" ? "ami-006a96c59953b3460" : ""}"
-  META_3_WEST_1 = "${local.local_data.awsRegion == "us-west-1" ? "" : ""}"
-  META_3_AMI = "${coalesce(local.META_3_EAST_1,local.META_3_EAST_2, local.META_3_WEST_1)}"
-
+  HACKER_BOX = "${local.local_data.off == "Kali Linux" ? "ami-06fd113e1286dd166" : ""}"
+  HACKER_BOX_1 = "${local.local_data.off == "Parrot Security OS" ? "ami-03b4813c9831470f4" : ""}"
+  HACKER_BOX_2 = "${local.local_data.off == "Pentoo" ? "ami-0a25944a8fcadcdc3" : ""}"
+  HACKER_BOX_AMI = "${coalesce(local.HACKER_BOX,local.HACKER_BOX_1, local.HACKER_BOX_2)}"
 }
 
 resource "random_id" "server" {
@@ -76,7 +70,7 @@ resource "random_id" "server" {
       vpc_id = "${aws_vpc.vpc1.id}"
       cidr_block = "10.0.1.0/24"
       map_public_ip_on_launch = "true" //it makes this a public subnet
-      availability_zone = local.local_data.region
+      availability_zone = "us-east-1a"
       tags ={
           Name = "ClickInfrastructure"
       }
@@ -84,7 +78,7 @@ resource "random_id" "server" {
 
   ######################### PROVIDER #################
   provider "aws" {
-    region = "${local.local_data.awsRegion}"
+    region = "us-east-1"
   }
   
   ######################## INTERNET ############################## 
@@ -182,9 +176,10 @@ resource "random_id" "server" {
         Name = "ClickInfrastructure"
       }
   }
+
 ######################## INSTANCES ############################
-  resource "aws_instance" "kali" {
-    ami = local.KALI_AMI
+  resource "aws_instance" "HackerCLi" {
+    ami = local.HACKER_BOX_AMI
     instance_type = local.local_data.size
     # VPC
     subnet_id = "${aws_subnet.subnet1.id}"
@@ -193,12 +188,20 @@ resource "random_id" "server" {
     # the Public SSH key
     key_name = "${aws_key_pair.generated_key.key_name}"
 
+    ##default volumne type is gp2 & will delete on termination.
+    root_block_device {
+      tags = {
+        Name = "ClickInfrastructure-${random_id.server.id}"
+      }
+      volume_size = local.local_data.storage
+    }
+
     tags = {
       Name = "ClickInfrastructure-${random_id.server.id}"
     }
 
     provisioner "local-exec" {
-        command =  "echo To connect to the machine use the SSH command:  ssh -i \"id_rsa\" kali@(static public IP address)  If permissions fail, try changing the permissions for the id_RSA file. More instructions found on the website. Your instance ID is: ${aws_instance.kali.id}  >> ipAddresses.txt"
+        command =  "echo To connect to the machine use the SSH command:  ssh -i \"id_rsa\" kali@(static public IP address)  If permissions fail, try changing the permissions for the id_RSA file. More instructions found on the website. Your instance ID is: ${aws_instance.HackerCLi.id}  >> ipAddresses.txt"
     }
     
     user_data = <<-EOF
@@ -212,8 +215,8 @@ resource "random_id" "server" {
   # ssh -L 5901:127.0.0.1:5901 -C -N -l kali 34.237.222.181 -i id_rsa
   # aws ec2 stop-instances --instance-ids 
 
-  resource "aws_instance" "metasploit2" {
-      ami = local.META_2_AMI
+  resource "aws_instance" "vulnerable" {
+      ami = local.VULN_BOX_AMI
       instance_type = local.local_data.size
       associate_public_ip_address = false
       # VPC
@@ -226,24 +229,99 @@ resource "random_id" "server" {
       }
 
       provisioner "local-exec" {
-        command =  "echo Metasploitable 2 private IP address: ${aws_instance.metasploit2.private_ip} Your instance ID is: ${aws_instance.metasploit2.id}  >> ipAddresses.txt"
+        command =  "echo Metasploitable 2 private IP address: ${aws_instance.vulnerable.private_ip} Your instance ID is: ${aws_instance.vulnerable.id}  >> ipAddresses.txt"
       }
   }
 
+############## EVERYTHING BELOW IS SOMETHING TO DO WITH LAMBDAS FOR STOPPING AND STARTING ################
+resource "aws_iam_policy" "stop_start_ec2_policy" {
+  name = "StopStartEC2Policy"
+  path = "/"
+  description = "IAM policy for stop and start EC2 from a lambda"
+    policy = jsonencode({
+        
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+            },
+            {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:Start*",
+                "ec2:Stop*",
+                "ec2:DescribeInstances*"
+            ],
+            "Resource": "*"
+            }
+          ]
+        })
+}
 
-  # resource "aws_instance" "metasploitable3" {
-  #     ami = "ami-0b49e298407cf1e17"
-  #     instance_type = local.local_data.size
-  #     associate_public_ip_address = false
-  #     # VPC
-  #     subnet_id = "${aws_subnet.subnet1.id}"
-  #     tags = {
-  #       Name = "ClickInfrastructure${random_id.server.id}"
-  #     }
+resource "aws_iam_role" "stop_start_ec2_role" {
+  name = "StopStartEC2Role"
+  assume_role_policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+        "Action": "sts:AssumeRole",
+        "Principal": {
+            "Service": "lambda.amazonaws.com"
+        },
+        "Effect": "Allow",
+        "Sid": ""
+        }
+    ]
+  })
+}
 
-  #     # Security Group
-  #     vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
-  #     provisioner "local-exec" {
-  #       command =  "echo Metasploitable 3 private IP address: ${aws_instance.metasploitable3.private_ip} Your instance ID is: ${aws_instance.metasploitable3.id}>> ipAddresses.txt"
-  #     }
-  # }
+resource "aws_iam_role_policy_attachment" "lambda_role_policy" {
+  role = "${aws_iam_role.stop_start_ec2_role.name}"
+  policy_arn = "${aws_iam_policy.stop_start_ec2_policy.arn}"
+}
+
+resource "aws_lambda_function" "stop_ec2_lambda" {
+  filename      = "ec2_lambda_handler.zip"
+  function_name = "stopEC2Lambda"
+  role          = "${aws_iam_role.stop_start_ec2_role.arn}"
+  handler       = "ec2_lambda_handler.stop"
+  source_code_hash = "${filebase64sha256("ec2_lambda_handler.zip")}"
+  runtime = "python3.7"
+  memory_size = "250"
+  timeout = "60"
+   environment {
+    variables = {
+      tag = "ClickInfrastructure-${random_id.server.id}"
+    }
+  }
+}
+
+resource "aws_lambda_function" "start_ec2_lambda" {
+  filename      = "ec2_lambda_handler.zip"
+  function_name = "startEC2Lambda"
+  role          = "${aws_iam_role.stop_start_ec2_role.arn}"
+  handler       = "ec2_lambda_handler.start"
+  source_code_hash = "${filebase64sha256("ec2_lambda_handler.zip")}"
+  runtime = "python3.7"
+  memory_size = "250"
+  timeout = "60"
+  environment {
+    variables = {
+      tag = "ClickInfrastructure-${random_id.server.id}"
+    }
+  }
+}
+
+resource "aws_eip" "elasticIP" {
+  instance = aws_instance.HackerCLi.id
+  vpc      = true
+  provisioner "local-exec" {
+    command =  "echo kali Static IP address is: ${aws_eip.elasticIP.public_ip} >> ipAddresses.txt"
+  }
+}

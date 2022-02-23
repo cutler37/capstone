@@ -54,23 +54,6 @@ function App() {
                         <Button>Download </Button>
                     </center>
                </Col>
-               <Col md='4'>
-                   <center>
-                        <h3>
-                            Python
-                        </h3>
-                    </center>
-                    <p>
-
-                    </p>
-                    <center>
-                        <Link to="/python">
-                            <Button>Tutorial</Button>
-                        </Link>
-                        &emsp;
-                        <Button>Download </Button>
-                    </center>
-               </Col>
            </Row>
        </Container>
     );

@@ -9,7 +9,6 @@ import Footer from './components/Footer'
 import Downloads from './components/Downloads'
 import Terraform from './components/Terraform'
 import Cloudformation from './components/Cloudformation'
-import Python from './components/Python'
 function App() {
 
   return (
@@ -32,10 +31,7 @@ function App() {
               <Route exact path='/' element={<Body/>}/>   
               <Route exact path='/downloads' element={<Downloads/>}/>   
               <Route exact path='/terraform' element={<Terraform/>}/>   
-              <Route exact path='/cloudformation' element={<Cloudformation/>}/>   
-              <Route exact path='/python' element={<Python/>}/>   
-
-
+              <Route exact path='/cloudformation' element={<Cloudformation/>}/>     
             </Routes >
           </bs.Col>
 

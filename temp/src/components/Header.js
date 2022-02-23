@@ -36,11 +36,6 @@ function App() {
                 Cloud Formation Tutorial
               </div>  
             </Nav.Link>
-            <Nav.Link href="/python"  className="right"> 
-              <div className="BrandText">
-                Python Tutorial
-              </div>  
-            </Nav.Link>
           </Nav>
           {/* <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />

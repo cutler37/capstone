@@ -1,8 +1,1 @@
-{
-    "awsRegion":"us-east-1",
-    "region":"us-east-1a",
-    "size":"t2.micro",
-    "off":"Kali",
-    "vuln":"Metasploitable 2",
-    "subnet":"1-"
-}
+{"size":"t2.micro","off":"Kali Linux","vuln":"Metasploitable 2","storage":"12"}
