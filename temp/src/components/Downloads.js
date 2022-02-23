@@ -20,7 +20,7 @@ function App() {
                 Customized templates are created through each tutorial and will be available for download.
            </p>
            <Row>
-               <Col md='4'>
+               <Col md='6'>
                    <center>
                         <h3>
                             Terraform
@@ -37,7 +37,7 @@ function App() {
                         <Button>Download </Button>
                     </center>
                </Col>
-               <Col md='4'>
+               <Col md='6'>
                    <center>
                         <h3>
                             Cloud Formation

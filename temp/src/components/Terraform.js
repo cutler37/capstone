@@ -18,8 +18,6 @@ import envVarPathEdit from '../images/envVarsPathEdit.png'
 import terraformInit from '../images/terraforminit.png'
 function App() {
 
-  const data = {url:"src/components/download.txt",filename: "download.txt"}
-
   return (
     <Container>
       <Row>
