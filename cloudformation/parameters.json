@@ -1,0 +1,42 @@
+[
+  {
+    "ParameterKey": "EnvironmentName",
+    "ParameterValue": "Pentest"
+  },
+  {
+    "ParameterKey": "VpcCIDR",
+    "ParameterValue": "172.20.0.0/16"
+  },
+  {
+    "ParameterKey": "PublicSubnetCIDR",
+    "ParameterValue": "172.20.1.0/24"
+  },
+  {
+    "ParameterKey": "KeyPairName",
+    "ParameterValue": "python_keypair"
+  },
+  {
+    "ParameterKey": "AttackVmType",
+    "ParameterValue": "t2.small"
+  },
+  {
+    "ParameterKey": "AttackImageId",
+    "ParameterValue": "ami-06fd113e1286dd166"
+  },
+  {
+    "ParameterKey": "VulnVmType",
+    "ParameterValue": "t2.micro"
+  },
+  {
+    "ParameterKey": "VulnImageId",
+    "ParameterValue": "ami-03ea1121e147b22b9"
+  },
+  {
+    "ParameterKey": "JuiceVmType",
+    "ParameterValue": "t2.micro"
+  },
+  {
+    "ParameterKey": "JuiceImageId",
+    "ParameterValue": "ami-033b95fb8079dc481"
+  }
+]
