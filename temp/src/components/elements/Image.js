@@ -63,6 +63,7 @@ const Image = ({
   }  
 
   return (
+    <img alt="o89"
       {...props}
       ref={image}
       className={className}
