@@ -1,0 +1,10 @@
+
+terraform/.terraform.lock.hcl
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/4.2.0/windows_386/terraform-provider-aws_v4.2.0_x5.exe
+terraform/.terraform/providers/registry.terraform.io/hashicorp/local/2.1.0/windows_386/terraform-provider-local_v2.1.0_x5.exe
+terraform/.terraform/providers/registry.terraform.io/hashicorp/random/3.1.0/windows_386/terraform-provider-random_v3.1.0_x5.exe
+terraform/.terraform/providers/registry.terraform.io/hashicorp/tls/3.1.0/windows_386/terraform-provider-tls_v3.1.0_x5.exe
+terraform/ipAddresses.txt
+terraform/status.json
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
