@@ -224,6 +224,7 @@ resource "random_id" "server" {
       # Security Group
       vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
 
+      
       tags = {
         Name = "ClickInfrastructure-${random_id.server.id}"
       }

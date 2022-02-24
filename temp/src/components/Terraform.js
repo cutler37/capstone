@@ -221,14 +221,11 @@ function App() {
         </Col>
       </Row>
       <Row>
-        <Col md='6'>
+        <Col>
           <br></br>
           <p>
             9) After terraform is initilaized you are ready to launch the virtual environment. To do this use the command 'terraform apply'. It will ask if you are sure you'd like to make the following changes. Just type 'yes' and hit enter. 
           </p>    
-        </Col>
-        <Col md='6'>
-          <img width='100%' src={directory}></img> 
         </Col>
       </Row>
       <Row>
