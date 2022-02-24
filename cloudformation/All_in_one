@@ -1,0 +1,139 @@
+#!/usr/bin/python3
+from __future__ import division, print_function, unicode_literals
+from datetime import datetime
+from pathlib import Path
+import logging
+import json
+import sys
+import boto3
+import botocore
+
+path = Path(__file__).parent.absolute()
+cf = boto3.client('cloudformation')
+log = logging.getLogger('deploy.cf.create_or_update')
+
+def main_menu():
+        print("1. Create a new EC2 keypair (Required only once)")
+        print("2. Customize settings (I don't want to use defaults!)")
+        print("3. Deploy Pentest Environment Stack on AWS")
+        print("4. Delete Pentent Environment Stack on AWS")
+        print("5. Quit script")
+        options = input("\nChoose option >>> ")
+        if options == '1':
+            try:
+                ec2 = boto3.resource('ec2')
+                keypair_name = 'python_keypair'
+                new_keypair = ec2.create_key_pair(KeyName=keypair_name)
+                with open('./python_keypair.pem', 'w') as file:
+                    file.write(new_keypair.key_material)
+                print("EC2 Key-Pair fingerprint: " + new_keypair.key_fingerprint)
+                print("EC2 Key-pair created: " + str(path) + "/python_keypair.pem\n")
+
+                main_menu()   
+            except botocore.exceptions.ClientError as ex:
+                error_message = ex.response['Error']['Message']
+                if error_message == 'The keypair \'python_keypair\' already exists.':
+                    print("The \'python_keypair\' already exists in your AWS account.")
+                    print("Re-download it from your AWS account if you lost it.\n")
+                    main_menu()
+        elif options == '2':
+            print("This option is not yet working. It will be done during next sprint.")
+            print("For now, please deploy using the defaults (Kali, Metasploitable2, and Owasp Juice)")
+            print("To do so, select option 3\n")
+            main_menu()
+        elif options == '3':
+            try:
+                main(*sys.argv[1:])
+            except TypeError as ex:
+                print("This script requires 3 arguments: stack name, template and parameters.")
+                print("Please, try again using the following as example:")
+                print("\"python3 pentest-stack ./template.yaml ./parameters.json\"")
+                exit()
+        elif options == '4':
+            print("This option is not yet working. It will be done during next sprint.")
+            print("For now, please delete the stack deployed mannualy, as follows:")
+            print("AWS Console > Search for Cloudformation > Stacks > Delete Stack")
+            exit()
+        elif options == '5':
+            print ("Closing. Thank you for testing our tool!")
+            exit()
+        else:
+            print("Invalid Option. Please choose again!\n")
+            main_menu()
+
+def main(stack_name, template, parameters):
+    'Update or create stack'
+
+    template_data = _parse_template(template)
+    parameter_data = _parse_parameters(parameters)
+
+    params = {
+        'StackName': stack_name,
+        'TemplateBody': template_data,
+        'Parameters': parameter_data,
+    }
+
+    try:
+        if _stack_exists(stack_name):
+            print('Updating {}'.format(stack_name))
+            stack_result = cf.update_stack(**params)
+            waiter = cf.get_waiter('stack_update_complete')
+        else:
+            print('Creating {}'.format(stack_name))
+            stack_result = cf.create_stack(**params)
+            waiter = cf.get_waiter('stack_create_complete')
+        print("...waiting for stack to be ready...")
+        waiter.wait(StackName=stack_name)
+    except botocore.exceptions.ClientError as ex:
+        error_message = ex.response['Error']['Message']
+        if error_message == 'No updates are to be performed.':
+            print("No changes")
+        else:
+            raise
+    else:
+        print(json.dumps(
+            cf.describe_stacks(StackName=stack_result['StackId']),
+            indent=2,
+            default=json_serial
+        ))
+
+
+def _parse_template(template):
+    with open(template) as template_fileobj:
+        template_data = template_fileobj.read()
+    cf.validate_template(TemplateBody=template_data)
+    return template_data
+
+
+def _parse_parameters(parameters):
+    with open(parameters) as parameter_fileobj:
+        parameter_data = json.load(parameter_fileobj)
+    return parameter_data
+
+
+def _stack_exists(stack_name):
+    stacks = cf.list_stacks()['StackSummaries']
+    for stack in stacks:
+        if stack['StackStatus'] == 'DELETE_COMPLETE':
+            continue
+        if stack_name == stack['StackName']:
+            return True
+    return False
+
+
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+    if isinstance(obj, datetime):
+        serial = obj.isoformat()
+        return serial
+    raise TypeError("Type not serializable")
+
+if __name__ == '__main__':
+    print("================== Welcome ===================")
+    main_menu()
+
+# Next iteration and final steps:
+    # - Provide ability to change the parameters file via option "2";
+    # - Fix option 4, to delete the stack automatically;
+    # - Update front-end with screenshots and walkthrough of the script;
+    # - Try to upload an updated Kali's AMI to AWS Marketplace (save about 10min)
