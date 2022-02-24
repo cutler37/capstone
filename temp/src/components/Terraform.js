@@ -22,7 +22,7 @@ function App() {
     <Container>
       <Row>
         <Col md='6'>
-          <img width='100%' height = '100%' src={terraformlogo}></img>
+          <img alt ="terraformlogo" width='100%' height = '100%' src={terraformlogo}></img>
         </Col>
         <Col md='6'>
           <center>
@@ -44,15 +44,15 @@ function App() {
           </p>
         </Col>
         <Col md='6'>
-          <img width='90%' height = '90%' src={envVar}></img>
+          <img alt ="envVar" width='90%' height = '90%' src={envVar}></img>
         </Col>
       </Row>
       <Row>
         <Col md='6'>
-          <img width='90%' height = '90%' src={envVarPath}></img>
+          <img alt ="envVarPath" width='90%' height = '90%' src={envVarPath}></img>
         </Col>
         <Col md='6'>
-          <img width='90%' height = '90%' src={envVarPathEdit}></img> 
+          <img alt ="envVarPathEdit" width='90%' height = '90%' src={envVarPathEdit}></img> 
         </Col>
       </Row>
       <Row>
@@ -76,14 +76,14 @@ function App() {
         </Col>
         <Col md='6'>
           <p>
-            <img width='100%' height = '100%' src={findIAM}></img>
+            <img alt ="findIAM" width='100%' height = '100%' src={findIAM}></img>
           </p>
         </Col>
       </Row>
       <Row>
         <Col md='6'>
           <p>
-            <img width='100%' height = '100%' src={findUsers}></img>
+            <img alt ="findUsers" width='100%' height = '100%' src={findUsers}></img>
           </p>
         </Col>
         <Col md='6'>
@@ -102,14 +102,14 @@ function App() {
         </Col>
         <Col md='6'>
           <p>
-            <img width='100%' height = '100%' src={addUsers}></img>
+            <img alt ="addUsers" width='100%' height = '100%' src={addUsers}></img>
           </p>
         </Col>
       </Row>  
       <Row>
         <Col md='6'>
           <p>
-            <img width='100%' height = '100%' src={createUser}></img>
+            <img alt ="createUser" width='100%' height = '100%' src={createUser}></img>
           </p>
         </Col>
         <Col md='6'>
@@ -134,14 +134,14 @@ function App() {
         </Col>
         <Col md='6'>
           <p>
-            <img width='100%' height = '100%' src={adminAccess}></img>
+            <img alt ="adminAccess" width='100%' height = '100%' src={adminAccess}></img>
           </p>
         </Col>
       </Row> 
       <Row>
         <Col md='6'>
           <p>
-            <img width='100%' height = '100%' src={getAccessKeys}></img>
+            <img alt ="getAccessKeys" width='100%' height = '100%' src={getAccessKeys}></img>
           </p>
         </Col>
         <Col md='6'>
@@ -159,7 +159,7 @@ function App() {
           </p>
         </Col>
         <Col md='6'>
-          <img width='100%' height = '50%' src={awsConfigure}></img>
+          <img alt ="awsConfigure" width='100%' height = '50%' src={awsConfigure}></img>
         </Col>
       </Row>  
 
@@ -196,7 +196,7 @@ function App() {
           </p>    
         </Col>
         <Col md='6'>
-          <img width='100%' src={directory}></img> 
+          <img alt ="directory" width='100%' src={directory}></img> 
         </Col>
       </Row>
       <Row>
@@ -217,7 +217,7 @@ function App() {
           </p>    
         </Col>
         <Col md='6'>
-          <img width='100%' src={terraformInit}></img> 
+          <img alt ="terraformInit" width='100%' src={terraformInit}></img> 
         </Col>
       </Row>
       <Row>

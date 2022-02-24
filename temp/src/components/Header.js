@@ -16,7 +16,7 @@ function App() {
           <div className='BrandText'>
             Vulnerable Cloud Infrastructure
           </div>
-          {/* <img src={logo} className="imagess" width='20px' height='20px' alt="title"/> */}
+          {/* <img alt ="logo" src={logo} className="imagess" width='20px' height='20px' alt="title"/> */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

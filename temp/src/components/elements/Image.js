@@ -63,7 +63,6 @@ const Image = ({
   }  
 
   return (
-    <img
       {...props}
       ref={image}
       className={className}

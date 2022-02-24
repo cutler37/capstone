@@ -9,7 +9,7 @@ function App() {
       <Container>
           <Row>
               <Col md='6'>
-                  <img width='100%' height = '100%' src={CloudImg}></img>
+                  <img alt ="CloudImg" width='100%' height = '100%' src={CloudImg}></img>
               </Col>
               <Col md='6'>
     <section class="banner_main">
@@ -27,7 +27,7 @@ function App() {
                         <br></br>
                         No extra hardware is necessary and no previous knowledge is required. Start learning hacking right now!</p>
                         <center>
-                        <Link to="/downloads" >
+                        <Link to="/options" >
                             <Button> Start Now</Button>
                         </Link>
                    </center>

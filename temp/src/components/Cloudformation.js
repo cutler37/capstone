@@ -21,7 +21,7 @@ function App() {
         <Col md="6">
           <center>
             <br></br>
-          <img width="50%" height="100%" src={cf_logo}></img></center>
+          <img alt ="cf_logo" width="50%" height="100%" src={cf_logo}></img></center>
         </Col>
         <Col md="6">
           <center>
@@ -80,14 +80,14 @@ function App() {
         </Col>
         <Col md="6">
           <p>
-            <img width="100%" height="100%" src={findIAM}></img>
+            <img alt ="findIAM" width="100%" height="100%" src={findIAM}></img>
           </p>
         </Col>
       </Row>
       <Row>
         <Col md="6">
           <p>
-            <img width="100%" height="100%" src={findUsers}></img>
+            <img alt ="findUsers" width="100%" height="100%" src={findUsers}></img>
           </p>
         </Col>
         <Col md="6">
@@ -106,14 +106,14 @@ function App() {
         </Col>
         <Col md="6">
           <p>
-            <img width="100%" height="100%" src={addUsers}></img>
+            <img alt ="addUsers" width="100%" height="100%" src={addUsers}></img>
           </p>
         </Col>
       </Row>
       <Row>
         <Col md="6">
           <p>
-            <img width="100%" height="100%" src={createUser}></img>
+            <img alt ="createUser" width="100%" height="100%" src={createUser}></img>
           </p>
         </Col>
         <Col md="6">
@@ -147,14 +147,14 @@ function App() {
         </Col>
         <Col md="6">
           <p>
-            <img width="100%" height="100%" src={adminAccess}></img>
+            <img alt ="adminAccess" width="100%" height="100%" src={adminAccess}></img>
           </p>
         </Col>
       </Row>
       <Row>
         <Col md="6">
           <p>
-            <img width="100%" height="100%" src={getAccessKeys}></img>
+            <img alt ="getAccessKeys" width="100%" height="100%" src={getAccessKeys}></img>
           </p>
         </Col>
         <Col md="6">
@@ -183,7 +183,7 @@ function App() {
         </Col>
         <Col md="6">
           <br></br> <br></br>
-          <img width="100%" height="30%" src={aws_configure}></img>
+          <img  alt ="aws_configure" width="100%" height="30%" src={aws_configure}></img>
         </Col>
       </Row>
       {/* ############## STEP TWO - Installing and Configuring AWS SDK for Python ####################### */}
@@ -209,7 +209,7 @@ function App() {
         </Col>
         <Col md="6">
           <p>
-            <img width="100%" height="100%" src={pip_version}></img>
+            <img alt ="pip_version" width="100%" height="100%" src={pip_version}></img>
           </p>
         </Col>
       </Row>
@@ -217,7 +217,7 @@ function App() {
       <Row>
         <Col md="6">
           <p>
-            <img width="100%" height="100%" src={pip_version_boto3}></img>
+            <img alt ="pip_version_boto3" width="100%" height="100%" src={pip_version_boto3}></img>
           </p>
         </Col>
         <Col md="6">
@@ -285,7 +285,7 @@ function App() {
         </Col>
         <Col md="6">
           <p>
-            <img width="100%" height="100%" src={pip_version}></img>
+            <img alt ="pip_version" width="100%" height="100%" src={pip_version}></img>
           </p>
         </Col>
       </Row>
