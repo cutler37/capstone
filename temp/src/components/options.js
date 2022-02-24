@@ -14,7 +14,7 @@ function App() {
                 <h1>Setup Options</h1>
            </center>
            <p>
-               This page contains downloads of two different ways to launch the vulnerable infrastructure in the cloud.
+                This page contains downloads of two different ways to launch the vulnerable infrastructure in the cloud.
                 Links to the setups and templates are found under each header below. Customized templates are created through each tutorial and will be available for download. 
            </p>
            <br></br>

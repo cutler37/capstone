@@ -1,11 +1,9 @@
 import React from 'react'
-import {Navbar,Nav,Form,FormControl,Button,NavDropdown} from 'react-bootstrap'
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '@fortawesome/fontawesome-free/css/all.css';
+import {Navbar,Nav} from 'react-bootstrap'
+
 import '../App.scss'
 import './headerContainer.scss'
-import { Link } from "react-router-dom";
-import logo from '../images/another attempt.png'
+
 
 function App() {
 
