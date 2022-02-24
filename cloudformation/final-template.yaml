@@ -1,0 +1,316 @@
+Description:    AWS CloudFormation Template to create a Pentesting Environment,
+ that consists of 3 machines - 1 Offensive OS, 1 Vulnerable OS, and 1 webserver 
+ for learning purposes. This template is part of the author's capstone, required 
+ for graduation at BYU (MISM). **WARNING** This template creates 3 Amazon EC2
+  instances, and you will be billed for the AWS resources used if you create a
+  stack from this template.
+
+Parameters:
+  EnvironmentName:
+    Description: An environment name that is prefixed to resource names
+    Type: String
+    Default: Pentest
+  VpcCIDR:
+    Description: Please enter the IP range (CIDR notation) for this VPC
+    Type: String
+    Default: 172.20.0.0/16
+  PublicSubnetCIDR:
+    Description: Please enter the IP range (CIDR notation) for the public subnet
+    Type: String
+    Default: 172.20.1.0/24
+  KeyPairName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+    Default: python_keypair
+  AttackVmType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.small
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+  AttackImageId:
+    Description: EC2 Image Id from this region
+    Type: AWS::EC2::Image::Id
+    Default: ami-06fd113e1286dd166
+  VulnVmType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+  VulnImageId:
+    Description: EC2 Image Id from this region
+    Type: AWS::EC2::Image::Id
+    Default: ami-03ea1121e147b22b9
+  JuiceVmType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+  JuiceImageId:
+    Description: EC2 Image Id on us-east-1
+    Type: AWS::EC2::Image::Id
+    Default: ami-033b95fb8079dc481
+    
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Ref EnvironmentName
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Ref EnvironmentName
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PublicSubnetCIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Public Subnet (AZ1)
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Public Routes
+  DefaultPublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+  PublicSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet1
+  NoIngressSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: "no-ingress-sg"
+      GroupDescription: "Security group with no ingress rule"
+      VpcId: !Ref VPC
+
+  AttackVmSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: Pentest-Attack-SG
+      GroupDescription: Enable vnc(5900) & ssh(22) access
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '5900'
+          ToPort: '5900'
+          CidrIp: 0.0.0.0/0 
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key:  Name
+          Value:  pentest-attack-sg
+        - Key:  Pentest
+          Value:
+            Ref: "AWS::StackName"
+  VulnVmSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: Pentest-Vuln-SG
+      GroupDescription: Open All Ports
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        IpProtocol: '-1'
+        FromPort: '-1'
+        ToPort: '-1'
+      Tags:
+        - Key:  Name
+          Value:  pentest-vuln-sg
+        - Key:  Pentest
+          Value:
+            Ref: "AWS::StackName"
+  JuiceVmSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: Pentest-Juice-SG
+      GroupDescription: Enable http (80) & ssh(22) access
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          CidrIp: 0.0.0.0/0 
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key:  Name
+          Value:  pentest-juice-sg
+        - Key:  Pentest
+          Value:
+            Ref: "AWS::StackName"
+
+  SGBaseIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    DependsOn: DefaultPublicRoute
+    Properties:
+      GroupId: !Ref AttackVmSG
+      IpProtocol: '-1'
+      FromPort: '-1'
+      ToPort: '-1'
+      SourceSecurityGroupId: !Ref AttackVmSG
+  SGBaseIngressVuln:
+    Type: AWS::EC2::SecurityGroupIngress
+    DependsOn: DefaultPublicRoute
+    Properties:
+      GroupId: !Ref VulnVmSG
+      IpProtocol: '-1'
+      FromPort: '-1'
+      ToPort: '-1'
+      SourceSecurityGroupId: !Ref VulnVmSG
+  SGBaseIngressJuice:
+    Type: AWS::EC2::SecurityGroupIngress
+    DependsOn: DefaultPublicRoute
+    Properties:
+      GroupId: !Ref JuiceVmSG
+      IpProtocol: '-1'
+      FromPort: '-1'
+      ToPort: '-1'
+      SourceSecurityGroupId: !Ref JuiceVmSG
+
+  AttackVmEc2:
+    DependsOn: DefaultPublicRoute
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: !Ref AttackVmType
+      SubnetId: !Ref PublicSubnet1
+      SecurityGroupIds:
+        - !Ref AttackVmSG
+      KeyName: !Ref KeyPairName
+      ImageId: !Ref AttackImageId
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          apt-update
+      Tags: 
+          - Key: Name
+            Value: Attack-VM-ec2
+          - Key: Pentest
+            Value:
+              Ref: "AWS::StackName"
+  VulnVmEc2:
+    DependsOn: DefaultPublicRoute
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: !Ref VulnVmType
+      SubnetId: !Ref PublicSubnet1
+      SecurityGroupIds:
+        - !Ref VulnVmSG
+      KeyName: !Ref KeyPairName
+      ImageId: !Ref VulnImageId
+      Tags: 
+          - Key: Name
+            Value: Vuln-VM-ec2
+          - Key: Pentest
+            Value:
+              Ref: "AWS::StackName"
+  WebServerVmEc2:
+    DependsOn: DefaultPublicRoute
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: !Ref JuiceVmType
+      SubnetId: !Ref PublicSubnet1
+      SecurityGroupIds:
+        - !Ref JuiceVmSG
+      KeyName: !Ref KeyPairName
+      ImageId: !Ref JuiceImageId
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          yum update -y
+          yum install -y docker
+          service docker start
+          yum install -y aws-cfn-bootstrap
+          docker pull bkimminich/juice-shop
+          docker run -d -p 80:3000 bkimminich/juice-shop
+      Tags: 
+          - Key: Name
+            Value: Juice-VM-ec2
+          - Key: Pentest
+            Value:
+              Ref: "AWS::StackName"
+
+Outputs:
+  VpcID:
+    Description: A reference to the created VPC
+    Value: !Ref VPC
+  PublicSubnetID:
+    Description: A reference to the public subnet
+    Value: !Ref PublicSubnet1
+  InstanceId:
+    Description: InstanceId of the offensive EC2 instance
+    Value: !Ref AttackVmEc2
+  PublicDNS:
+    Description: Public DNS Name of the Offensive EC2 instance
+    Value: !GetAtt 
+      - AttackVmEc2
+      - PublicDnsName
+  PublicIP:
+    Description: Public IP address of the offensive EC2 instance
+    Value: !GetAtt 
+      - AttackVmEc2
+      - PublicIp
+  InstanceId2:
+    Description: InstanceId of the vulnerable EC2 instance
+    Value: !Ref VulnVmEc2
+  PublicDNS2:
+    Description: Public DNS Name of the vulnerable EC2 instance
+    Value: !GetAtt 
+      - VulnVmEc2
+      - PublicDnsName
+  PublicIP2:
+    Description: Public IP address of the vulnerable EC2 instance
+    Value: !GetAtt 
+      - VulnVmEc2
+      - PublicIp
+  InstanceId3:
+    Description: InstanceId of the WebApp EC2 instance
+    Value: !Ref WebServerVmEc2
+  PublicDNS3:
+    Description: Public DNS Name of the WebApp EC2 instance
+    Value: !GetAtt 
+      - WebServerVmEc2
+      - PublicDnsName
+  PublicIP3:
+    Description: Public IP address of the WebApp EC2 instance
+    Value: !GetAtt 
+      - WebServerVmEc2
+      - PublicIp
