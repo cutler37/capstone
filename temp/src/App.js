@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Routes ,Route, Switch} from 'react-router-dom'
 import HeaderContainer from './components/Header'
 import Body from './components/body'
 import Footer from './components/Footer'
-import Downloads from './components/Downloads'
+import Downloads from './components/options'
 import Terraform from './components/Terraform'
 import Cloudformation from './components/Cloudformation'
 function App() {
@@ -29,7 +29,7 @@ function App() {
           <bs.Col md='12' className="bodyBackground">
             <Routes >
               <Route exact path='/' element={<Body/>}/>   
-              <Route exact path='/downloads' element={<Downloads/>}/>   
+              <Route exact path='/options' element={<Downloads/>}/>   
               <Route exact path='/terraform' element={<Terraform/>}/>   
               <Route exact path='/cloudformation' element={<Cloudformation/>}/>     
             </Routes >

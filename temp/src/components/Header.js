@@ -21,9 +21,9 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav  style={{float:"right"}} >
-            <Nav.Link href="/downloads" className="right" >
+            <Nav.Link href="/options" className="right" >
               <div className="BrandText">
-                Downloads
+                Options
               </div>  
             </Nav.Link>
             <Nav.Link href="/terraform"  className="right"> 
