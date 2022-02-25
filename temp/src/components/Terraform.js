@@ -62,7 +62,7 @@ function App() {
         </p>
       </Row>
       <br></br>
-      {/* ############## STEP THREE ####################### */}
+{/* ############## STEP THREE ####################### */}
       <Row>
         <AWSConfigure></AWSConfigure>
       </Row> 
@@ -83,15 +83,18 @@ function App() {
         </Col>
       </Row>   
       <br></br><br></br>
+{/* ################# STEP FIVE ################### */}
       <Row>
         <Col>
           <p>
             5) Step 5 is only utilized to customize your environment. Instead of using the variables.json above this form will create a custom one for you. Be alert on your selections though, because based on your selections the price AWS will change. We will try to provide pricing help but it is not always 100% accurate. You can always go check out the prices aws provides <a href="https://calculator.aws/#/">here</a>. All prices we show are estimates and could be wrong.
-          </p>    
+          </p>
+          <br></br>    
           <SelectionForm></SelectionForm>
           <br></br><br></br>
         </Col>
       </Row>
+{/* ################# STEP SIX ################### */}
       <Row>
         <Col md='6'>
           <br></br>
@@ -103,6 +106,7 @@ function App() {
           <img alt ="directory" width='100%' src={directory}></img> 
         </Col>
       </Row>
+{/* ################# STEP SEVEN ################### */}
       <Row>
         <Col >
           <br></br>
@@ -111,6 +115,7 @@ function App() {
           </p>
         </Col>
       </Row>
+{/* ################# STEP EIGHT ################### */}
       <Row>
         <Col md='6'>
           <br></br>
@@ -124,6 +129,7 @@ function App() {
           <img alt ="terraformInit" width='100%' src={terraformInit}></img> 
         </Col>
       </Row>
+{/* ################# STEP NINE ################### */}
       <Row>
         <Col>
           <br></br>
@@ -132,6 +138,7 @@ function App() {
           </p>    
         </Col>
       </Row>
+{/* ################# STEP TEN ################### */}
       <Row>
         <br></br>
         <p>
@@ -159,6 +166,8 @@ function App() {
         <br></br>
         <br></br>
       </Row>
+      <br></br>
+{/* ################# STEP ELEVEN ################### */}
       <Row>
         <p>
           11) CLOSING: Here is a list of all necessary and unnecessary commands to help you manage your terraform instances:
@@ -179,6 +188,7 @@ stopEC2Lambda status.json</li>
             If you try to use these commands repeadedly in succession you may receive an error. Just wait a minute and try again or look at the status.json to see what errors you receive. 
         </p>
       </Row>
+{/* ################# STEP TWELVE ################### */}
       <Row>
         <p>
           12) OPTIONAL/EXTRA: Many people like to have the GUI interface for the Kali linux instance. The next 2 steps will provide multiple ways to install and connect to that interface (remember the their are inherent risks with using remote desktop services of someone else access your machine if you are not careful). 
@@ -195,6 +205,7 @@ stopEC2Lambda status.json</li>
           </ul>
         </p>
       </Row>
+      
       <Row>
         <p>
           12a) Setting up via Chrome desktop connect (recommended):
@@ -204,6 +215,7 @@ stopEC2Lambda status.json</li>
         <a href="https://victorleungtw.medium.com/install-ubuntu-desktop-on-aws-instance-with-chrome-remote-desktop-3beb30755379">https://victorleungtw.medium.com/install-ubuntu-desktop-on-aws-instance-with-chrome-remote-desktop-3beb30755379</a>
         <br></br>
       </Row>
+      <br></br>
       <Row>
         <p>
           12b) Setting up GUI via TigerVNC:
@@ -212,6 +224,7 @@ stopEC2Lambda status.json</li>
         </p>
         <a href="https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-2-install-gui/">https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-2-install-gui/</a>
       </Row>
+      <br></br>
     </Container>
   );
 }
