@@ -284,7 +284,7 @@ def build_json():
     json_string = json.dumps(data)
     
     #export to file 
-    with open ('variables.json','w') as outfile:
+    with open ('variables_test.json','w') as outfile:
         outfile.write(json_string)
     
     print('A new parameters file will now be created for you to be able to use with your app.')
