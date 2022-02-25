@@ -8,3 +8,4 @@ terraform/ipAddresses.txt
 terraform/status.json
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
+package-lock.json
