@@ -61,10 +61,10 @@ function SelectionForm () {
           <input type="radio" name="vulVM" value="Metasploitable 3" onChange={handleChange}/>Metasploitable 3<br/>
           <br></br>
           <label>III) What size do you want you're Offensive Virtual Machine to be? Remember the larger the size the more AWS charges you. We won't charge anything. t2.micro is under free tier; however, it may not run like you want.</label><br></br>
-          <input type="radio" name="size" value="t2.micro" onChange={handleChange}/>t2.micro (1 vCPU 1 GiB)<br/>
-          <input type="radio" name="size" value="t2.medium" onChange={handleChange}/>t2.medium (2 vCPU 4 GiB) [Recommended]<br/>
-          <input type="radio" name="size" value="t2.large" onChange={handleChange}/>t2.large (2 vCPU 8 GiB)<br/>
-          <input type="radio" name="size" value="t2.xlarge" onChange={handleChange}/>t2.xlarge (4 vCPU 16 GiB)<br/>
+          <input type="radio" name="size" value="t2.micro" onChange={handleChange}/>t2.micro (1 vCPU 1 GiB) (estimated price: $0.013 per hour, unless on free tier)<br/>
+          <input type="radio" name="size" value="t2.medium" onChange={handleChange}/>t2.medium (2 vCPU 4 GiB) [Recommended] (estimated price: $0.052 per hour)<br/>
+          <input type="radio" name="size" value="t2.large" onChange={handleChange}/>t2.large (2 vCPU 8 GiB) (estimated price: $0.0928 per hour)<br/>
+          <input type="radio" name="size" value="t2.xlarge" onChange={handleChange}/>t2.xlarge (4 vCPU 16 GiB)  (estimated price: $0.1856 per hour)<br/>
           <br></br>
           <label>IV) How much storage do you want associated with your Kali Linux image? Remember AWS only allows 30GBs accross all instances so using anything beyond 30 will cost you about $0.10 per GiB.</label><br></br>
           <input type="radio" name="storage" value="12" onChange={handleChange}/>12 GiB<br/>

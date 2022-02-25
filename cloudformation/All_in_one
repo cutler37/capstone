@@ -40,13 +40,22 @@ def main_menu():
                     print("Re-download it from your AWS account if you lost it.\n")
                     main_menu()
         elif options == '2':
-            print("This option is not yet working. It will be done during next sprint.")
-            print("For now, please deploy using the defaults (Kali, Metasploitable2, and Owasp Juice)")
-            print("To do so, select option 3\n")
-            main_menu()
+            print("If you want to use different VMs you can continue.")
+            print("If you don't know or understand we recommend you use the defaults. (Kali, Metasploitable2, and Owasp Juice)\n")
+            print("1: To use defaults and return to the main page")
+            print("2: To continue and customize your VMs")
+            VMoptions = input("\nEnter your selection: >>> ")
+            if VMoptions == '1':
+                main_menu()
+            if VMoptions == '2':
+                build_json()
         elif options == '3':
             try:
-                main(sys.argv[1:][0],sys.argv[1:][1],sys.argv[1:][2],'Create')
+                if len(sys.argv) > 1:
+                    main('Create',sys.argv[1:][0],sys.argv[1:][1],sys.argv[1:][2])
+                else:
+                    # If no values are entered on the commandline, just use default positioning
+                    main('Create')
             except TypeError as ex:
                 print("This script requires 3 arguments: stack name, template and parameters.")
                 print("Please, try again using the following as example:")
@@ -56,7 +65,10 @@ def main_menu():
             print("This option is not yet working. It will be done during next sprint.")
             print("For now, please delete the stack deployed mannualy, as follows:")
             print("AWS Console > Search for Cloudformation > Stacks > Delete Stack")
-            main(sys.argv[1:][0],sys.argv[1:][1],sys.argv[1:][2],'Delete')
+            if len(sys.argv) > 1:
+                main('Delete', sys.argv[1:][0],sys.argv[1:][1],sys.argv[1:][2])
+            else:
+                main('Delete')
         elif options == '5':
             print("This option will not delete your instances.")
             print("It will save your instance state and stop them, so you can restart them with option 6")
@@ -73,8 +85,8 @@ def main_menu():
             print("Invalid Option. Please choose again!\n")
             main_menu()
 
-def main(stack_name, template, parameters,createDestroy):
-    'Update or create stack'
+def main(createDestroy, stack_name='defaultstack', template = './final-template.yaml', parameters='./parameters.json'):
+    'Update, create, or delete stack'
     print('inside main')
     template_data = _parse_template(template)
     parameter_data = _parse_parameters(parameters)
@@ -148,6 +160,135 @@ def Stop_Start_Instances(stopStart):
     if stopStart == "StartInstances":
         ec2.start_instances(InstanceIds=instances)
         print('Started instances: ' + str(instances))
+
+def build_json():
+    attackVMAMI = 'ami-06fd113e1286dd166'
+    attackVMSize = 't2.micro'
+    vulnVMAMI = 'ami-03ea1121e147b22b9'
+    storage = '30'
+
+    #SELECT ATTACK VM 
+    print('\nWe offer 3 different VMs that you can use to attack your vulnerable VMs.')
+    print('However, each type of VM has different costs. Price estimates as of 2/25/2022.\n')
+    print('1. Kali Linux (Free Software, Tested, & Recommended)')
+    print('2. Parrot Security OS (about $0.05 per hour for software)')
+    print('3. Pentoo (about $0.07 per hour for software)')
+    attackVMOptions = input("\nSelect which VM you prefer to use: >>> ")
+    
+    if attackVMOptions == '1':
+        attackVMAMI = 'ami-06fd113e1286dd166'
+    elif attackVMOptions == '2':
+        attackVMAMI = 'ami-03b4813c9831470f4'
+    elif attackVMOptions == '3':
+        attackVMAMI = 'ami-0a25944a8fcadcdc3'
+    else: 
+        print('Invalid input. Exiting.')
+        exit()
+    
+    #SELECT SIZE OF ATTACK MACHINE
+    print('\nAmazon offers various sizes of machines in which to run your VMs.')
+    print('The larger the machine the faster you can process data.')
+    print('However, the larger the machine the more expensive it is to run per hour. Price estimates as of 2/25/2022.\n')
+    print('1. t2.micro (1 vCPU 1 GiB) {estimated price: $0.013 per hour, unless on free tier}')
+    print('2. t2.medium (2 vCPU 4 GiB) [Recommended] {estimated price: $0.052 per hour}')
+    print('3. t2.large (2 vCPU 8 GiB) {estimated price: $0.0928 per hour}')
+    print('4. t2.xlarge (4 vCPU 16 GiB) {estimated price: $0.1856 per hour}')
+    attackVMSizeOptions = input("\nSelect which VM size you prefer to use: >>> ")
+    
+    if attackVMSizeOptions == '1':
+        attackVMSize = 't2.micro'
+    elif attackVMSizeOptions == '2':
+        attackVMSize = 't2.medium'
+    elif attackVMSizeOptions == '3':
+        attackVMSize = 't2.large'
+    elif attackVMSizeOptions == '4':
+        attackVMSize = 't2.xlarge'
+    else: 
+        print('Invalid input. Exiting.')
+        exit()
+
+    #SELECT STORAGE SIZE TO CONNECT TO YOUR ATTACK VM
+    print('\nEnter in the storage size to attach to your attack VM.')
+    print('Remember the more storage you use the more it costs you.')
+    print('In addition, Depending on the different VM types you selected.')
+    print('You will be required to add a minumium amount of memory to an instance.')
+    print('For instance Kali Linux you have to have atleast 12GiB, Parrot is 30GiB, and Pentoo is 20GiB.')
+    print('If you are on the free tier you get to use about 30GiB to use a month, anything above 30GiB is about $0.10 per GiB.')
+    print('Price estimate 2/25/2022.\n')
+    storageAmount = input("\nHow much memory (GiB) would you like to attach: >>> ")
+    
+    try:
+        storageAmount = int(storageAmount)
+    except Exception as e: 
+        print('Error: '+ e)
+        print('Invalid input. Exiting.')
+        exit()
+
+    #SELECT VULNERABLE MACHINE TO HACK
+    print('\nAmazon offers various vulnerable machines to hack.')
+    print('Search Google for more information considering each VM.\n')
+    print('1. OWASP Juice Box')
+    print('2. Metasploitable 2 [Recommended]')
+    print('3. DVWA-Application-Demo (Untested, but popular)')
+    print('4. Metasploitable 3')
+    vulnVMAMIOptions = input("\nSelect which Vulnerable machine you would like to hack: >>> ")
+    
+    if vulnVMAMIOptions == '1':
+        vulnVMAMI = 'ami-0cea98c1668042d67'
+    elif vulnVMAMIOptions == '2':
+        vulnVMAMI = 'ami-03ea1121e147b22b9'
+    elif vulnVMAMIOptions == '3':
+        vulnVMAMI = 'ami-0631939d90aa6e6d1'
+    elif vulnVMAMIOptions == '4':
+        vulnVMAMI = 'ami-0b49e298407cf1e17'
+    else: 
+        print('Invalid input. Exiting.')
+        exit()
+
+    data = [
+         {
+            "ParameterKey": "EnvironmentName",
+            "ParameterValue": "Pentest"
+        },
+        {
+            "ParameterKey": "VpcCIDR",
+            "ParameterValue": "172.20.0.0/16"
+        },
+        {
+            "ParameterKey": "PublicSubnetCIDR",
+            "ParameterValue": "172.20.1.0/24"
+        },
+        {
+            "ParameterKey": "KeyPairName",
+            "ParameterValue": "python_keypair"
+        },
+        {
+            "ParameterKey": "AttackVmType",
+            "ParameterValue": attackVMSize
+        },
+        {
+            "ParameterKey": "AttackImageId",
+            "ParameterValue": attackVMAMI
+        },
+         {
+            "ParameterKey": "VulnVmType",
+            "ParameterValue": "t2.micro"
+        },
+        {
+            "ParameterKey": "VulnImageId",
+            "ParameterValue": vulnVMAMI
+        },
+        # THIS NEEDS TO BE ADDED ALSO MAYBE ADD ANOTHER VULN IMAGE OPTION"storage": storage
+    ]
+
+    json_string = json.dumps(data)
+    
+    #export to file 
+    with open ('variables.json','w') as outfile:
+        outfile.write(json_string)
+    
+    print('A new parameters file will now be created for you to be able to use with your app.')
+    main_menu()
 
 def _parse_template(template):
     with open(template) as template_fileobj:
