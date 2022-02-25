@@ -16,8 +16,11 @@ def main_menu():
         print("1. Create a new EC2 keypair (Required only once)")
         print("2. Customize settings (I don't want to use defaults!)")
         print("3. Deploy Pentest Environment Stack on AWS")
-        print("4. Delete Pentent Environment Stack on AWS")
-        print("5. Quit script")
+        print("4. Delete Pentest Environment Stack on AWS")
+        print("5. Temporarily stop your Instances from running")
+        print("6. Restart your stopped Instances")
+        print("7. Quit script")
+        
         options = input("\nChoose option >>> ")
         if options == '1':
             try:
@@ -43,27 +46,36 @@ def main_menu():
             main_menu()
         elif options == '3':
             try:
-                main(*sys.argv[1:])
+                main(sys.argv[1:][0],sys.argv[1:][1],sys.argv[1:][2],'Create')
             except TypeError as ex:
                 print("This script requires 3 arguments: stack name, template and parameters.")
                 print("Please, try again using the following as example:")
-                print("\"python3 pentest-stack ./template.yaml ./parameters.json\"")
+                print("\"python3 (script??) pentest-stack ./template.yaml ./parameters.json\"")
                 exit()
         elif options == '4':
             print("This option is not yet working. It will be done during next sprint.")
             print("For now, please delete the stack deployed mannualy, as follows:")
             print("AWS Console > Search for Cloudformation > Stacks > Delete Stack")
-            exit()
+            main(sys.argv[1:][0],sys.argv[1:][1],sys.argv[1:][2],'Delete')
         elif options == '5':
+            print("This option will not delete your instances.")
+            print("It will save your instance state and stop them, so you can restart them with option 6")
+            print("Only if you have already launched instances in the past.")
+            Stop_Start_Instances("StopInstances")
+        elif options == '6':
+            print("This option will restart stopped instances.")
+            print("If you used option 5 to stop your instances use this option to restart them in their saved state.")
+            Stop_Start_Instances("StartInstances")
+        elif options == '7':
             print ("Closing. Thank you for testing our tool!")
             exit()
         else:
             print("Invalid Option. Please choose again!\n")
             main_menu()
 
-def main(stack_name, template, parameters):
+def main(stack_name, template, parameters,createDestroy):
     'Update or create stack'
-
+    print('inside main')
     template_data = _parse_template(template)
     parameter_data = _parse_parameters(parameters)
 
@@ -73,30 +85,68 @@ def main(stack_name, template, parameters):
         'Parameters': parameter_data,
     }
 
-    try:
-        if _stack_exists(stack_name):
-            print('Updating {}'.format(stack_name))
-            stack_result = cf.update_stack(**params)
-            waiter = cf.get_waiter('stack_update_complete')
+    ##### CREATE STACKS #####
+    if createDestroy == 'Create':
+        try:
+            if _stack_exists(stack_name):
+                print('Updating {}'.format(stack_name))
+                stack_result = cf.update_stack(**params)
+                waiter = cf.get_waiter('stack_update_complete')
+            else:
+                print('Creating {}'.format(stack_name))
+                stack_result = cf.create_stack(**params)
+                waiter = cf.get_waiter('stack_create_complete')
+            print("...waiting for stack to be ready...")
+            waiter.wait(StackName=stack_name)
+        except botocore.exceptions.ClientError as ex:
+            error_message = ex.response['Error']['Message']
+            if error_message == 'No updates are to be performed.':
+                print("No changes")
+            else:
+                raise
         else:
-            print('Creating {}'.format(stack_name))
-            stack_result = cf.create_stack(**params)
-            waiter = cf.get_waiter('stack_create_complete')
-        print("...waiting for stack to be ready...")
-        waiter.wait(StackName=stack_name)
-    except botocore.exceptions.ClientError as ex:
-        error_message = ex.response['Error']['Message']
-        if error_message == 'No updates are to be performed.':
-            print("No changes")
-        else:
-            raise
-    else:
-        print(json.dumps(
-            cf.describe_stacks(StackName=stack_result['StackId']),
-            indent=2,
-            default=json_serial
-        ))
+            print(json.dumps(
+                cf.describe_stacks(StackName=stack_result['StackId']),
+                indent=2,
+                default=json_serial
+            ))
+    ##### DELETE STACKS #####
+    elif createDestroy == 'Delete':
+        try:
+            print('Deleting {}'.format(stack_name))
+            stack_result = cf.delete_stack(StackName=stack_name)
+            waiter = cf.get_waiter('stack_delete_complete')
+            waiter.wait(StackName=stack_name)
+        except botocore.exceptions.ClientError as ex:
+            print('ERROR Deleting Stack:')
+            print(ex)
 
+
+def Stop_Start_Instances(stopStart):
+    region = 'us-east-1'
+    ec2 = boto3.client('ec2', region_name=region)
+    response = ec2.describe_instances(Filters=[
+            {
+                'Name': 'tag:Pentest',
+                'Values': [
+                   "pentest-stack",
+                ]
+            },
+        ])
+
+    instances = []
+
+    for reservation in response["Reservations"]:
+        for instance in reservation["Instances"]:
+            instances.append(instance["InstanceId"])
+
+    if stopStart == "StopInstances":
+        ec2.stop_instances(InstanceIds=instances)
+        print('stopped instances: ' + str(instances))
+
+    if stopStart == "StartInstances":
+        ec2.start_instances(InstanceIds=instances)
+        print('Started instances: ' + str(instances))
 
 def _parse_template(template):
     with open(template) as template_fileobj:
