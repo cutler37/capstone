@@ -117,6 +117,7 @@ def main(stack_name, template, parameters,createDestroy):
             stack_result = cf.delete_stack(StackName=stack_name)
             waiter = cf.get_waiter('stack_delete_complete')
             waiter.wait(StackName=stack_name)
+            print('Delete of stack '+ stack_name + ' completed.')
         except botocore.exceptions.ClientError as ex:
             print('ERROR Deleting Stack:')
             print(ex)
