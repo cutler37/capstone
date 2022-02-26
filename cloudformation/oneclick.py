@@ -57,14 +57,9 @@ def main_menu():
                     # If no values are entered on the commandline, just use default positioning
                     main('Create')
             except TypeError as ex:
-                print("This script requires 3 arguments: stack name, template and parameters.")
-                print("Please, try again using the following as example:")
-                print("\"python3 (script??) pentest-stack ./template.yaml ./parameters.json\"")
+                print("Some error happened. PLease try again")
                 exit()
         elif options == '4':
-            print("This option is not yet working. It will be done during next sprint.")
-            print("For now, please delete the stack deployed mannualy, as follows:")
-            print("AWS Console > Search for Cloudformation > Stacks > Delete Stack")
             if len(sys.argv) > 1:
                 main('Delete', sys.argv[1:][0],sys.argv[1:][1],sys.argv[1:][2])
             else:
@@ -108,7 +103,8 @@ def main(createDestroy, stack_name='defaultstack', template = './final-template.
                 print('Creating {}'.format(stack_name))
                 stack_result = cf.create_stack(**params)
                 waiter = cf.get_waiter('stack_create_complete')
-            print("...waiting for stack to be ready...")
+            print("Waiting for stack to be ready...")
+            print("It should take no more than 2 minutes")
             waiter.wait(StackName=stack_name)
         except botocore.exceptions.ClientError as ex:
             error_message = ex.response['Error']['Message']
@@ -198,11 +194,11 @@ def build_json():
     if attackVMSizeOptions == '1':
         attackVMSize = 't2.micro'
     elif attackVMSizeOptions == '2':
-        attackVMSize = 't2.medium'
+        attackVMSize = 't2.small'
     elif attackVMSizeOptions == '3':
-        attackVMSize = 't2.large'
+        attackVMSize = 't2.medium'
     elif attackVMSizeOptions == '4':
-        attackVMSize = 't2.xlarge'
+        attackVMSize = 't2.large'
     else: 
         print('Invalid input. Exiting.')
         exit()
@@ -284,7 +280,7 @@ def build_json():
     json_string = json.dumps(data)
     
     #export to file 
-    with open ('variables_test.json','w') as outfile:
+    with open ('customized_parameters.json','w') as outfile:
         outfile.write(json_string)
     
     print('A new parameters file will now be created for you to be able to use with your app.')
@@ -325,7 +321,7 @@ if __name__ == '__main__':
     main_menu()
 
 # Next iteration and final steps:
-    # - Provide ability to change the parameters file via option "2";
-    # - Fix option 4, to delete the stack automatically;
     # - Update front-end with screenshots and walkthrough of the script;
-    # - Try to upload an updated Kali's AMI to AWS Marketplace (save about 10min)
+    # - Update script and template to include storage option as a paramater;
+    # - Add VNC instructions on the README file;
+    # - Print only Offensive IP, Vulnerable IP, and Tutorial IP. Not sure if we should describe the whole stack
