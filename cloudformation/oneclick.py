@@ -80,9 +80,8 @@ def main_menu():
             print("Invalid Option. Please choose again!\n")
             main_menu()
 
-def main(createDestroy, stack_name='defaultstack', template = './final-template.yaml', parameters='./parameters.json'):
+def main(createDestroy, stack_name='defaultstack', template = './template.yaml', parameters='./parameters.json'):
     'Update, create, or delete stack'
-    print('inside main')
     template_data = _parse_template(template)
     parameter_data = _parse_parameters(parameters)
 
@@ -122,6 +121,7 @@ def main(createDestroy, stack_name='defaultstack', template = './final-template.
     elif createDestroy == 'Delete':
         try:
             print('Deleting {}'.format(stack_name))
+            print('It should take about a minute')
             stack_result = cf.delete_stack(StackName=stack_name)
             waiter = cf.get_waiter('stack_delete_complete')
             waiter.wait(StackName=stack_name)
@@ -129,7 +129,6 @@ def main(createDestroy, stack_name='defaultstack', template = './final-template.
         except botocore.exceptions.ClientError as ex:
             print('ERROR Deleting Stack:')
             print(ex)
-
 
 def Stop_Start_Instances(stopStart):
     region = 'us-east-1'
