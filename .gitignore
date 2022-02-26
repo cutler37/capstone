@@ -10,3 +10,4 @@ terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 package-lock.json
 *.pem
+**/.DS_Store
