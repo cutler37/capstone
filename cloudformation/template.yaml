@@ -224,8 +224,7 @@ Resources:
           - Key: Name
             Value: Attack-VM-ec2
           - Key: Pentest
-            Value:
-              Ref: "AWS::StackName"
+            Value: pentest-stack
   VulnVmEc2:
     DependsOn: DefaultPublicRoute
     Type: 'AWS::EC2::Instance'
@@ -240,8 +239,7 @@ Resources:
           - Key: Name
             Value: Vuln-VM-ec2
           - Key: Pentest
-            Value:
-              Ref: "AWS::StackName"
+            Value: pentest-stack
   WebServerVmEc2:
     DependsOn: DefaultPublicRoute
     Type: 'AWS::EC2::Instance'
@@ -265,8 +263,8 @@ Resources:
           - Key: Name
             Value: Juice-VM-ec2
           - Key: Pentest
-            Value:
-              Ref: "AWS::StackName"
+            Value: pentest-stack
+            
 
 Outputs:
   VpcID:

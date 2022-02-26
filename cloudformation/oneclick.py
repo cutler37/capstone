@@ -37,7 +37,8 @@ def main_menu():
                 error_message = ex.response['Error']['Message']
                 if error_message == 'The keypair \'python_keypair\' already exists.':
                     print("The \'python_keypair\' already exists in your AWS account.")
-                    print("Re-download it from your AWS account if you lost it.\n")
+                    print("If you lost the key, go to the AWS console and delete it.")
+                    print("After that, you could create a new key.\n")
                     main_menu()
         elif options == '2':
             print("If you want to use different VMs you can continue.")
@@ -80,7 +81,7 @@ def main_menu():
             print("Invalid Option. Please choose again!\n")
             main_menu()
 
-def main(createDestroy, stack_name='defaultstack', template = './template.yaml', parameters='./parameters.json'):
+def main(createDestroy, stack_name='pentest-stack', template = './template.yaml', parameters='./parameters.json'):
     'Update, create, or delete stack'
     template_data = _parse_template(template)
     parameter_data = _parse_parameters(parameters)
@@ -103,7 +104,7 @@ def main(createDestroy, stack_name='defaultstack', template = './template.yaml',
                 stack_result = cf.create_stack(**params)
                 waiter = cf.get_waiter('stack_create_complete')
             print("Waiting for stack to be ready...")
-            print("It should take no more than 2 minutes")
+            print("It should take no more than 3 minutes. Please wait.")
             waiter.wait(StackName=stack_name)
         except botocore.exceptions.ClientError as ex:
             error_message = ex.response['Error']['Message']
@@ -111,6 +112,15 @@ def main(createDestroy, stack_name='defaultstack', template = './template.yaml',
                 print("No changes")
             else:
                 raise
+        except botocore.exceptions.WaiterError as e:
+            print("\nDo you have the python_keypair.pem on your AWS Accounts?")
+            print("Without the key, the deployment won't work")
+            print("Choose option \'1\' to generate and upload a new keypair.\n")
+            if len(sys.argv) > 1:
+                main('Delete', sys.argv[1:][0],sys.argv[1:][1],sys.argv[1:][2])
+            else:
+                main('Delete')
+            main_menu()             
         else:
             print(json.dumps(
                 cf.describe_stacks(StackName=stack_result['StackId']),
@@ -121,11 +131,11 @@ def main(createDestroy, stack_name='defaultstack', template = './template.yaml',
     elif createDestroy == 'Delete':
         try:
             print('Deleting {}'.format(stack_name))
-            print('It should take about a minute')
+            print('Please wait...')
             stack_result = cf.delete_stack(StackName=stack_name)
             waiter = cf.get_waiter('stack_delete_complete')
             waiter.wait(StackName=stack_name)
-            print('Delete of stack '+ stack_name + ' completed.')
+            print('Delete of stack '+ stack_name + ' completed.\n')
         except botocore.exceptions.ClientError as ex:
             print('ERROR Deleting Stack:')
             print(ex)
@@ -185,11 +195,10 @@ def build_json():
     print('The larger the machine the faster you can process data.')
     print('However, the larger the machine the more expensive it is to run per hour. Price estimates as of 2/25/2022.\n')
     print('1. t2.micro (1 vCPU 1 GiB) {estimated price: $0.013 per hour, unless on free tier}')
-    print('2. t2.medium (2 vCPU 4 GiB) [Recommended] {estimated price: $0.052 per hour}')
-    print('3. t2.large (2 vCPU 8 GiB) {estimated price: $0.0928 per hour}')
-    print('4. t2.xlarge (4 vCPU 16 GiB) {estimated price: $0.1856 per hour}')
+    print('2. t2.small (1 vCPU 2 GiB) [Recommended] {estimated price: $0.023 per hour}')
+    print('3. t2.medium (2 vCPU 4 GiB) [Recommended] {estimated price: $0.052 per hour}')
+    print('4. t2.large (2 vCPU 8 GiB) {estimated price: $0.0928 per hour}')
     attackVMSizeOptions = input("\nSelect which VM size you prefer to use: >>> ")
-    
     if attackVMSizeOptions == '1':
         attackVMSize = 't2.micro'
     elif attackVMSizeOptions == '2':
@@ -211,13 +220,12 @@ def build_json():
     print('If you are on the free tier you get to use about 30GiB to use a month, anything above 30GiB is about $0.10 per GiB.')
     print('Price estimate 2/25/2022.\n')
     storageAmount = input("\nHow much memory (GiB) would you like to attach: >>> ")
-    
-    try:
-        storageAmount = int(storageAmount)
-    except Exception as e: 
-        print('Error: '+ e)
-        print('Invalid input. Exiting.')
-        exit()
+    while storageAmount.isdigit()==False:
+        storageAmount = input("Enter a positive number: ")
+        if storageAmount.isdigit()==False:
+            print("Invalid input. ")
+        else:
+            continue
 
     #SELECT VULNERABLE MACHINE TO HACK
     print('\nAmazon offers various vulnerable machines to hack.')
@@ -282,8 +290,10 @@ def build_json():
     with open ('customized_parameters.json','w') as outfile:
         outfile.write(json_string)
     
-    print('A new parameters file will now be created for you to be able to use with your app.')
-    main_menu()
+    print('\nThe file \'customized_parameters.json\' has been created.')
+    print('Re-start the script passing it as a parameter, followed by option \'3\':')
+    print('\'python3 ./oneclick.py anyStackName ./template.yaml ./customized_parameters.json')
+    exit()
 
 def _parse_template(template):
     with open(template) as template_fileobj:
