@@ -14,7 +14,7 @@ function App() {
                 <h1>Setup Options</h1>
            </center>
            <p>
-                This page contains downloads of two different ways to launch the vulnerable infrastructure in the cloud.
+                This page contains two different ways to launch the vulnerable infrastructure in the cloud.
                 Links to the setups and templates are found under each header below. Customized templates are created through each tutorial and will be available for download. 
            </p>
            <br></br>
@@ -71,6 +71,13 @@ function App() {
                         </Link>
                     </center>
                </Col>
+           </Row>
+           <Row>
+               <br></br><br></br>
+               <br></br><br></br>
+               <p>
+                   Both scripts will utilize the users Amazon Web Services (AWS) account to launch these hacking environments, so while we won't charge money to utilzie our scripts; Amazon will charge money based on services rendered. The people utilizing these scripts need to keep track of their billing information on the AWS console so that charges will not surprise them. We recommend utilizing the stop functions in both scripts to pause the useage of AWS services when not using the servers provided. 
+               </p>
            </Row>
        </Container>
     );
