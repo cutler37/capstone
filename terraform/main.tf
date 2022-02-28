@@ -30,12 +30,6 @@ variable "PRIVATE_KEY_PATH" {
   default ="/id_rsa"
 }
 
-variable "EC2_USER" {
-  default ="rowan"
-}
-
-
-
 locals {
   ################ Import variables ###############
   local_data = jsondecode(file("/variables.json"))
