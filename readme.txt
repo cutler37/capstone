@@ -1,7 +1,9 @@
-THe temp folder contains the Website to be setup to accompany this project. 
+The temp folder contains the Website to be setup to accompany this project. 
 The terraform folder contains the terraform script that can be run for launching a vulnerable environment
+The cloudformation folder contains the python script that can be run for launching a vulnerable environment
 
 steps for launchign terraform as illustrated on the website:
+                                                
                                                 Terraform Tutorial
           
 Before you begin, make sure you have a valid aws account. We will not charge you for any services, but the services you set up via the script on the cloud may charge you for certain options you select. None of the money you pay will go to us, it will go to aws, where the services are being hosted. All scripts on this site are free to use.       
