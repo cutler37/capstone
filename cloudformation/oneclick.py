@@ -330,7 +330,6 @@ if __name__ == '__main__':
     main_menu()
 
 # Next iteration and final steps:
-    # - Update front-end with screenshots and walkthrough of the script;
     # - Update script and template to include storage option as a paramater;
     # - Add VNC instructions on the README file;
     # - Print only Offensive IP, Vulnerable IP, and Tutorial IP. Not sure if we should describe the whole stack
