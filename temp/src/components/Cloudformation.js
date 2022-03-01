@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SelectionForm2 from '../components/cf_selectionform'
+import SelectionForm2 from "../components/cf_selectionform";
 // Import Photos
 import cf_logo from "../images/cf_logo.png";
 import findIAM from "../images/gotoIAM.png";
@@ -13,6 +13,19 @@ import getAccessKeys from "../images/getAccesskeys.png";
 import pip_version from "../images/pip_version.png";
 import pip_version_boto3 from "../images/pip_version_boto3.png";
 import aws_configure from "../images/aws_configure.png";
+import cf_initial_menu from "../images/cf_initial_menu.png";
+import cf_key_created from "../images/cf_key_created.png";
+import cf_creating_wait from "../images/cf_creating_wait.png";
+import cf_creating_console from "../images/cf_creating_console.png";
+import cf_output from "../images/cf_output.png";
+import cf_output2 from "../images/cf_output2.png";
+import cf_ssh from "../images/cf_ssh.png";
+import cf_owasp_juice_shop from "../images/cf_owasp_juice_shop.png";
+import cf_deleting from "../images/cf_deleting.png";
+import cf_customizing from "../images/cf_customizing.png";
+import cf_vnc_conf from "../images/cf_vnc_conf.png";
+import cf_kali_gui from "../images/cf_kali_gui.png";
+import cf_vnc_kali from "../images/cf_vnc_kali.png";
 
 function App() {
   return (
@@ -21,12 +34,13 @@ function App() {
         <Col md="6">
           <center>
             <br></br>
-          <img alt ="cf_logo" width="50%" height="100%" src={cf_logo}></img></center>
+            <img alt="cf_logo" width="50%" height="100%" src={cf_logo}></img>
+          </center>
         </Col>
         <Col md="6">
           <center>
             <h1>
-            <br></br>              <br></br>
+              <br></br> <br></br>
               <span class="white1">Cloudformation Tutorial</span>
             </h1>
           </center>
@@ -52,13 +66,14 @@ function App() {
           In order to launch this online infrastructure we need to have AWS CLI
           properly installed and configured. To confirm the installation, use
           the "aws --version" command at a command prompt/terminal. If you have
-          already set it up then skip to step 2. 
-          </p>
-          <p>To download the aws cli for
-          windows click{" "}
+          already set it up then skip to step 2.
+        </p>
+        <p>
+          To download the aws cli for windows click{" "}
           <a href="https://awscli.amazonaws.com/AWSCLIV2.msi">here</a> or for
           mac go <a href="https://awscli.amazonaws.com/AWSCLIV2.pkg">here </a>.
-          Alternatively you can find AWS CLI directly at the aws documentation website, clicking{" "}
+          Alternatively you can find AWS CLI directly at the aws documentation
+          website, clicking{" "}
           <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">
             here
           </a>
@@ -80,14 +95,19 @@ function App() {
         </Col>
         <Col md="6">
           <p>
-            <img alt ="findIAM" width="100%" height="100%" src={findIAM}></img>
+            <img alt="findIAM" width="100%" height="100%" src={findIAM}></img>
           </p>
         </Col>
       </Row>
       <Row>
         <Col md="6">
           <p>
-            <img alt ="findUsers" width="100%" height="100%" src={findUsers}></img>
+            <img
+              alt="findUsers"
+              width="100%"
+              height="100%"
+              src={findUsers}
+            ></img>
           </p>
         </Col>
         <Col md="6">
@@ -106,14 +126,19 @@ function App() {
         </Col>
         <Col md="6">
           <p>
-            <img alt ="addUsers" width="100%" height="100%" src={addUsers}></img>
+            <img alt="addUsers" width="100%" height="100%" src={addUsers}></img>
           </p>
         </Col>
       </Row>
       <Row>
         <Col md="6">
           <p>
-            <img alt ="createUser" width="100%" height="100%" src={createUser}></img>
+            <img
+              alt="createUser"
+              width="100%"
+              height="100%"
+              src={createUser}
+            ></img>
           </p>
         </Col>
         <Col md="6">
@@ -147,14 +172,24 @@ function App() {
         </Col>
         <Col md="6">
           <p>
-            <img alt ="adminAccess" width="100%" height="100%" src={adminAccess}></img>
+            <img
+              alt="adminAccess"
+              width="100%"
+              height="100%"
+              src={adminAccess}
+            ></img>
           </p>
         </Col>
       </Row>
       <Row>
         <Col md="6">
           <p>
-            <img alt ="getAccessKeys" width="100%" height="100%" src={getAccessKeys}></img>
+            <img
+              alt="getAccessKeys"
+              width="100%"
+              height="100%"
+              src={getAccessKeys}
+            ></img>
           </p>
         </Col>
         <Col md="6">
@@ -183,7 +218,12 @@ function App() {
         </Col>
         <Col md="6">
           <br></br> <br></br>
-          <img  alt ="aws_configure" width="100%" height="30%" src={aws_configure}></img>
+          <img
+            alt="aws_configure"
+            width="100%"
+            height="30%"
+            src={aws_configure}
+          ></img>
         </Col>
       </Row>
       {/* ############## STEP TWO - Installing and Configuring AWS SDK for Python ####################### */}
@@ -194,22 +234,36 @@ function App() {
           </h1>
         </center>
         <p>
-        The SDK is composed of two key Python packages: Botocore (the library providing the low-level functionality shared between the Python SDK and the AWS CLI) and Boto3 (the package implementing the Python SDK itself). 
-        
-        Before installing Boto3, install Python 3.6 or later (support for Python 3.5 and earlier is deprecated). Check if you have python3 installed using the command "python3 --version". If installed, skip to the next paragraph. 
-        For information about how to get the latest version of Python, see the official Python documentation clicking <a href="https://www.python.org/downloads/">here </a>.
+          The SDK is composed of two key Python packages: Botocore (the library
+          providing the low-level functionality shared between the Python SDK
+          and the AWS CLI) and Boto3 (the package implementing the Python SDK
+          itself). Before installing Boto3, install Python 3.6 or later (support
+          for Python 3.5 and earlier is deprecated). Check if you have python3
+          installed using the command "python3 --version". If installed, skip to
+          the next paragraph. For information about how to get the latest
+          version of Python, see the official Python documentation clicking{" "}
+          <a href="https://www.python.org/downloads/">here </a>.
         </p>
       </Row>
       <br></br>
       <Row>
         <Col md="6">
-        <p>
-        To use Boto3, you first need to install it and its dependencies. Install the latest Boto3 release via pip, by typing the following command at a command prompt/terminal "pip install boto3", or "pip3 install boto3", dpending on the pip version you have installed in your system. 
-        </p>
+          <p>
+            To use Boto3, you first need to install it and its dependencies.
+            Install the latest Boto3 release via pip, by typing the following
+            command at a command prompt/terminal "pip install boto3", or "pip3
+            install boto3", dpending on the pip version you have installed in
+            your system.
+          </p>
         </Col>
         <Col md="6">
           <p>
-            <img alt ="pip_version" width="100%" height="100%" src={pip_version}></img>
+            <img
+              alt="pip_version"
+              width="100%"
+              height="100%"
+              src={pip_version}
+            ></img>
           </p>
         </Col>
       </Row>
@@ -217,75 +271,362 @@ function App() {
       <Row>
         <Col md="6">
           <p>
-            <img alt ="pip_version_boto3" width="100%" height="100%" src={pip_version_boto3}></img>
+            <img
+              alt="pip_version_boto3"
+              width="100%"
+              height="100%"
+              src={pip_version_boto3}
+            ></img>
           </p>
         </Col>
         <Col md="6">
-        <br></br> <br></br><br></br>
-        <p>
-        Confirm that Boto3 has been properly installed by typing the command "pip show boto3" or "pip3 show boto3".
-        </p>
-        </Col>
-      </Row>
-      <Row>
-        <center>
-        <p>
-        Now that we are done with all requirements, its time to easily deploy the pentest environment!
-        </p></center>
-      </Row>
-            {/* ############## STEP THREE - Customizing your environment  ####################### */}
-        <Row> 
-        <center>
-        <br></br>
-          <h1>
-            <span class="white1">3 - Customizing your environment</span>
-          </h1>
-        </center>
-        <p>
-          Now that the setup of AWS CLI and SDK Python is complete, you will need the two files in which to launch the aws environment from. The cf_vulnInfrastructure.zip file that contains the code to launch the VMs in the AWS environment and the variables.json that tells the script what machines and other settings you'd like to use in your virtual environment. We recommend using the default script and variables below. However, if you want to create a different environment than provided utilize the form below to create your own variables.json file. If you just want to use the tested and recommended settings, skip to step 4 after downloading the files provided below.
-        </p>
-      </Row>
-      <Row>
-      <center>
-        <Col md='2'>
-          <Link to="/downloads/variables.json" target="_blank" download>vulnInfrastructure.zip</Link>
-        </Col>
-        <Col md='2'>
-          <Link to="/downloads/variables.json" target="_blank" download>variables.json</Link>
-        </Col>
-        </center>
-      </Row>   
-      <br></br><br></br>
-      <Row>
-        <Col>
+          <br></br> <br></br>
+          <br></br>
           <p>
-            Select the option below ONLY if you prefer to customize your environment instead of using our reocmmended defaults. In this case, instead of using the variables.json provided above we will create a custom one for you. Be alert on your selections though, because based on your selections the price AWS will change. We will try to provide pricing help but it is not always 100% accurate. You can always go check out the prices aws provides <a href="https://calculator.aws/#/">here</a>.
-          </p>    
-          <SelectionForm2></SelectionForm2>
-          <br></br><br></br>
+            Confirm that Boto3 has been properly installed by typing the command
+            "pip show boto3" or "pip3 show boto3".
+          </p>
         </Col>
       </Row>
-            {/* ############## STEP FOUR - Deploying your environment  ####################### */}
-            <Row>
+      <Row>
         <center>
+          <p>
+            Now that we are done with all requirements, its time to easily
+            deploy the pentest environment!
+          </p>
+        </center>
+      </Row>
+      {/* ############## STEP THREE - Deploying with Defaults  ####################### */}
+      <Row>
+        <center>
+          <br></br>
           <h1>
-            <span class="white1">4 - Deploying your environment!</span>
+            <span class="white1">3 - Deploying your environment!</span>
           </h1>
         </center>
         <p>
-          Test!
+          Now that the setup of AWS CLI and SDK Python is complete, it's time to
+          deploy the pentest infrastructure in AWS. Please, download the
+          cfVulnInfrastrucure.zip file below.
         </p>
+      </Row>
+      <Row>
+        <center>
+          <Col md="2">
+            <Link
+              to="/downloads/cfVulnInfrastrucure.zip"
+              target="_blank"
+              download
+            >
+              cfVulnInfrastrucure.zip
+            </Link>
+            <br></br>
+            <br></br>
+          </Col>
+        </center>
+        <p>
+          After unzipping the file, all you need to do is running the script(in
+          the folder, type "python3 oneclick.py"), and the default virtual
+          machines will be deployed (Kali, Metasploitable2, and Owasp Juice).
+        </p>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            <br></br>
+            The first time you run the script, you must generate a new key-pair
+            that will be required to connect into your instances. So, just
+            select the first option to create it and upload it to your AWS
+            account.
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            <img
+              alt="initial_menu"
+              width="100%"
+              height="100%"
+              src={cf_initial_menu}
+            ></img>
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            <img
+              alt="pip_version_boto3"
+              width="100%"
+              height="100%"
+              src={cf_key_created}
+            ></img>
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            Note that the key will be saved in your current folder. Linux and
+            MacOS users, remember to grant proper permissions to the key ('chmod
+            0400 ./python_keypair.pem'). If you already created the key in the
+            past, and lost access to it, please go to your AWS account and
+            delete the former key ("python_keypair"), so a new one cloud be
+            created.
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            <br></br>
+            With the key-pair created, you can go ahead and select option 3 to
+            deploy the pentest environment. It will about 3 minutes to deploy
+            all resources.
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            <img
+              alt="initial_menu"
+              width="80%"
+              height="100%"
+              src={cf_creating_wait}
+            ></img>
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            <img
+              alt="pip_version_boto3"
+              width="100%"
+              height="100%"
+              src={cf_creating_console}
+            ></img>
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            Feel free to open your AWS account and confirm that the
+            "pentest-stack" is correctly being deployed directly from the AWS
+            Console" .
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            After about 3 minutes, all should be ready and all details about the
+            stack will be printed out for you!
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            <img
+              alt="initial_menu"
+              width="100%"
+              height="100%"
+              src={cf_output}
+            ></img>
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            <img
+              alt="initial_menu"
+              width="100%"
+              height="100%"
+              src={cf_output2}
+            ></img>
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            <br></br>
+            If you'd prefer, check the output directly from the AWS Console
+            (Cloudformation > Stacks > Pentest-stack > Output).
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            You did it! Now you could SSH into your Offensive VM ('ssh -i
+            ./python_keypair.pem kali@your_ec2_address') OR you could follow the
+            instructions on Step 6 to have a full GUI. Either way, we always
+            recommend to run 'sudo apt update' and 'sudo apt install -y
+            kali-linux-default kali-desktop-core' to enjoy all default tools in
+            Kali.
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            <img
+              alt="initial_menu"
+              width="100%"
+              height="100%"
+              src={cf_ssh}
+            ></img>
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            <img
+              alt="initial_menu"
+              width="100%"
+              height="100%"
+              src={cf_owasp_juice_shop}
+            ></img>
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            Also, from the output you could easily find the address to connect
+            to the OWASP Juice VM, which has a full tutorial for learning how to
+            break WebApps and learning hacking techniques (Just remember that
+            it's running via http, not https!). The IP address of the vulnerable
+            VM is also included in the output. Have fun!
+          </p>
+        </Col>
+      </Row>
+      {/* ############## STEP FOUR - Deleting/Stoping/Restarting Instances  ####################### */}
+      <Row>
+        <center>
+          <br></br>
+          <h1>
+            <span class="white1">
+              4 - Deleting, Stopping or Restarting Instances
+            </span>
+          </h1>
+        </center>
       </Row>
       <br></br>
       <Row>
         <Col md="6">
-        <p>
-        Test again
-        </p>
+          <p>
+            To delete the stack, its as easy as it was to deploy. Just run the
+            script and select option #4 (per screenshot, took me only 2min and
+            8sec to delete the whole thing!). Similarly, options #5 and #6 will
+            allow you to respectively stop and restart all 3 instances deployed.
+          </p>
         </Col>
         <Col md="6">
           <p>
-            <img alt ="pip_version" width="100%" height="100%" src={pip_version}></img>
+            <img
+              alt="pip_version"
+              width="100%"
+              height="100%"
+              src={cf_deleting}
+            ></img>
+          </p>
+        </Col>
+      </Row>
+      {/* ############## STEP FIVE - Customizing your environment  ####################### */}
+      <Row>
+        <center>
+          <br></br>
+          <h1>
+            <span class="white1">5 - Customizing your Environment!</span>
+          </h1>
+        </center>
+      </Row>
+      <br></br>
+      <Row>
+        <Col md="6">
+          <p>
+            <img
+              alt="pip_version"
+              width="100%"
+              height="100%"
+              src={cf_customizing}
+            ></img>
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            The option #2 in the script will help you to customize your own
+            environment. This is only recommended for advanced users. Just
+            follow the instructions given, answering according to your
+            preferences, and pay close attention on how to use the script with
+            the customized parameters file. Check the picture for more details.
+          </p>
+        </Col>
+      </Row>
+      {/* ############## STEP SIX - Using Kali with GUI!  ####################### */}
+      <Row>
+        <center>
+          <br></br>
+          <h1>
+            <span class="white1">6 - Using Kali with full GUI!</span>
+          </h1>
+        </center>
+      </Row>
+      <br></br>
+      <Row>
+        <Col md="6">
+          <p>
+            If you would prefer to use Kali with GUI, we need to do a couple
+            extra steps that will take at least 10 minutes. Start by connecting
+            via SSH into your Kali VM. Then run the following commands:
+          </p>
+          <pre>{`
+sudo apt update -y
+sudo apt install -y kali-linux-default kali-desktop-core kali-desktop-xfce
+tightvncserver
+          `}</pre>
+          <p>
+            Configure the VNC Password. When done, close the SSH
+            connection and reconnect with the following command: 'ssh -L
+            5901:localhost:5901 -i python_keypair.pem kali@your_ec2_address'.
+            Now we are ready to use any VNC tool via SSH (tunnel)
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            <img
+              alt="pip_version"
+              width="100%"
+              height="100%"
+              src={cf_kali_gui}
+            ></img>
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            <img
+              alt="pip_version"
+              width="100%"
+              height="100%"
+              src={cf_vnc_conf}
+            ></img>
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            Now configure the VNC Tool of your preference (I'm using VNC
+            Connect) with the address of localhost:5901
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+          <p>
+            Done! After entering the password configured, you are in with full GUI!
+          </p>
+        </Col>
+        <Col md="6">
+          <p>
+            <img
+              alt="pip_version"
+              width="100%"
+              height="100%"
+              src={cf_vnc_kali}
+            ></img>
           </p>
         </Col>
       </Row>
@@ -294,3 +635,17 @@ function App() {
 }
 
 export default App;
+
+// #!/bin/bash
+// #Update Kali
+//
+
+// # If GUI is wanted, do the following:
+//
+// #Configure your vnc password:
+// tightvncserver
+// # choose password, followed by "n"
+// # Connect to your VNC server using SSH as follows:
+// #
+// #   Address to connect when using VNC Viewer:
+// #       localhost:5901
