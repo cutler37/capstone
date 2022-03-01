@@ -331,5 +331,5 @@ if __name__ == '__main__':
 
 # Next iteration and final steps:
     # - Update script and template to include storage option as a paramater;
-    # - Add VNC instructions on the README file;
     # - Print only Offensive IP, Vulnerable IP, and Tutorial IP. Not sure if we should describe the whole stack
+    # - Implement suggestions from in-class progress report
