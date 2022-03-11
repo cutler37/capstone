@@ -21,7 +21,7 @@ function App() {
           <Nav  style={{float:"right"}} >
             <Nav.Link href="/options" className="right" >
               <div className="BrandText">
-                Options
+                Setup Options
               </div>  
             </Nav.Link>
             <Nav.Link href="/terraform"  className="right"> 

@@ -142,7 +142,7 @@ function App() {
       <Row>
         <br></br>
         <p>
-          10) After waiting a few minutes for the environment to deploy, make sure you have the following new files 'id_rsa', and ipAddresses. The id_rsa is the private key of the keypair that you will use to connect with your Kali instance. You will do this the first time using SSH. Make sure that your command line is in the same file as the id_rsa file. Then use the following command: "ssh -i 'id_rsa' kali@(replace with static IP address found in the ipAddresses file)"
+          10) After waiting a few minutes for the environment to deploy, make sure you have the following new files 'id_rsa', and 'ipAddresses'. The id_rsa is the private key of the keypair that you will use to connect with your Kali instance. You will do this the first time using SSH. Make sure that your command line is in the same file as the id_rsa file. Then use the following command: "ssh -i 'id_rsa' kali@(replace with static IP address found in the ipAddresses file)"
         </p> 
         <p>
           The Kali instance on AWS is not completely configured. In fact tools on this image is quite sparse to allow for customization and reduced image size. In order to to update kali and download missing tools you will need to run a few commands. These commands can take several minutes to run:
@@ -158,7 +158,7 @@ function App() {
           For additional help go to the kali documentation <a href='https://www.kali.org/docs/cloud/aws/'>here</a>.
         </p>   
         <p>
-          You can now begin to perform penetration tests on your fellow metasploitable machines using the private ip addresses found in the ipAddresses file. There are lots of websites to help you do this. Here are just a few helpers:
+          You can now begin to perform penetration tests on your fellow metasploitable machines using the private ip addresses found in the ipAddresses file. There are lots of websites to help you do this. Several are linked to below. Finally, remember that as long as your instances are running aws is charging you (unless you are in the free tier). In order to stop aws from charging you make sure to stop or destroy your instances. This is explained in more detail in step 11.
         </p>
         <a href="https://www.udemy.com/course/learn-hacking-10-windows-using-metasploit-from-scratch/">https://www.udemy.com/course/learn-hacking-10-windows-using-metasploit-from-scratch/</a>
         <a href="https://www.offensive-security.com/metasploit-unleashed/">https://www.offensive-security.com/metasploit-unleashed/</a>
