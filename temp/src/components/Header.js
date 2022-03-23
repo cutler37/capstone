@@ -1,5 +1,6 @@
 import React from 'react'
 import {Navbar,Nav} from 'react-bootstrap'
+import { NavLink } from 'react-router-dom'
 
 import '../App.scss'
 import './headerContainer.scss'
@@ -18,22 +19,22 @@ function App() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav  style={{float:"right"}} >
-            <Nav.Link href="/options" className="right" >
+          <Nav  className='ms-auto' >
+            <NavLink to="/options" className="right" >
               <div className="BrandText">
-                Setup Options
+                Tutorial Options
               </div>  
-            </Nav.Link>
-            <Nav.Link href="/terraform"  className="right"> 
+            </NavLink>
+            <NavLink to="/terraform"  className="right"> 
               <div className="BrandText">
                 Terraform Tutorial
               </div>  
-            </Nav.Link>
-            <Nav.Link href="/cloudformation"  className="right"> 
+            </NavLink>
+            <NavLink to="/cloudformation"  className="right"> 
               <div className="BrandText">
                 Cloud Formation Tutorial
               </div>  
-            </Nav.Link>
+            </NavLink>
           </Nav>
           {/* <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />

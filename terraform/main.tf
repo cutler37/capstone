@@ -32,7 +32,7 @@ variable "PRIVATE_KEY_PATH" {
 
 locals {
   ################ Import variables ###############
-  local_data = jsondecode(file("/variables.json"))
+  local_data = jsondecode(file("./variables.json"))
 
   ################ VULN AMI #######################
   VULN_BOX = "${local.local_data.vuln == "Metasploitable 2" ? "ami-03ea1121e147b22b9" : ""}"
@@ -194,9 +194,6 @@ resource "random_id" "server" {
       Name = "ClickInfrastructure-${random_id.server.id}"
     }
 
-    provisioner "local-exec" {
-        command =  "echo To connect to the machine use the SSH command:  ssh -i \"id_rsa\" kali@(static public IP address)  If permissions fail, try changing the permissions for the id_RSA file. More instructions found on the website. Your instance ID is: ${aws_instance.HackerCLi.id}  >> ipAddresses.txt"
-    }
     
     user_data = <<-EOF
       #!/bin/bash
