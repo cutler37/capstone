@@ -32,7 +32,7 @@ function App() {
             </NavLink>
             <NavLink to="/cloudformation"  className="right"> 
               <div className="BrandText">
-                Cloud Formation Tutorial
+                Python Tutorial
               </div>  
             </NavLink>
           </Nav>

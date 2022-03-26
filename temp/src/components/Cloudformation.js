@@ -18,7 +18,6 @@ import cf_key_created from "../images/cf_key_created.png";
 import cf_creating_wait from "../images/cf_creating_wait.png";
 import cf_creating_console from "../images/cf_creating_console.png";
 import cf_output from "../images/cf_output.png";
-import cf_output2 from "../images/cf_output2.png";
 import cf_ssh from "../images/cf_ssh.png";
 import cf_owasp_juice_shop from "../images/cf_owasp_juice_shop.png";
 import cf_deleting from "../images/cf_deleting.png";
@@ -41,7 +40,7 @@ function App() {
           <center>
             <h1>
               <br></br> <br></br>
-              <span class="white1">Cloudformation Tutorial</span>
+              <span class="white1">Python Tutorial</span>
             </h1>
           </center>
           <p>
@@ -212,8 +211,7 @@ function App() {
             configure". It will ask you for to enter your AWS Access Key ID and
             your AWS Secret Access Key. Enter the keys you got for the user you
             created on AWS in these spots. When it asks you for a default region
-            you could use us-east-1 or you can bypass these steps by just
-            clicking enter through the next two questions.
+            make sure to use us-east-1, and skip the final remaining question.
           </p>
         </Col>
         <Col md="6">
@@ -365,8 +363,8 @@ function App() {
         <Col md="6">
           <p>
             Note that the key will be saved in your current folder. Linux and
-            MacOS users, remember to grant proper permissions to the key ('chmod
-            0400 ./python_keypair.pem'). If you already created the key in the
+            MacOS users, close the script and type in your terminal 'chmod
+            0400 ./python_keypair.pem'. If you already created the key in the
             past, and lost access to it, please go to your AWS account and
             delete the former key ("python_keypair"), so a new one cloud be
             created.
@@ -378,22 +376,12 @@ function App() {
           <p>
             <br></br>
             With the key-pair created, you can go ahead and select option 3 to
-            deploy the pentest environment. It will about 3 minutes to deploy
-            all resources.
+            deploy the pentest environment. It will about 3-5 minutes to deploy
+            all resources. Feel free to open your AWS account and confirm that the
+            "pentest-stack" is correctly being deployed directly from the AWS
+            Console" .
           </p>
         </Col>
-        <Col md="6">
-          <p>
-            <img
-              alt="initial_menu"
-              width="80%"
-              height="100%"
-              src={cf_creating_wait}
-            ></img>
-          </p>
-        </Col>
-      </Row>
-      <Row>
         <Col md="6">
           <p>
             <img
@@ -404,21 +392,8 @@ function App() {
             ></img>
           </p>
         </Col>
-        <Col md="6">
-          <p>
-            Feel free to open your AWS account and confirm that the
-            "pentest-stack" is correctly being deployed directly from the AWS
-            Console" .
-          </p>
-        </Col>
       </Row>
       <Row>
-        <Col md="6">
-          <p>
-            After about 3 minutes, all should be ready and all details about the
-            stack will be printed out for you!
-          </p>
-        </Col>
         <Col md="6">
           <p>
             <img
@@ -429,69 +404,24 @@ function App() {
             ></img>
           </p>
         </Col>
-      </Row>
-      <Row>
         <Col md="6">
           <p>
-            <img
-              alt="initial_menu"
-              width="100%"
-              height="100%"
-              src={cf_output2}
-            ></img>
-          </p>
-        </Col>
-        <Col md="6">
-          <p>
-            <br></br>
-            If you'd prefer, check the output directly from the AWS Console
-            (Cloudformation > Stacks > Pentest-stack > Output).
+            After about 3-5 minutes, all should be ready and all details about the
+            stack will be printed out for you!
           </p>
         </Col>
       </Row>
       <Row>
-        <Col md="6">
+        <Col>
           <p>
-            You did it! Now you could SSH into your Offensive VM ('ssh -i
-            ./python_keypair.pem kali@your_ec2_address') OR you could follow the
-            instructions on Step 6 to have a full GUI. Either way, we always
-            recommend to run 'sudo apt update' and 'sudo apt install -y
-            kali-linux-default kali-desktop-core' to enjoy all default tools in
-            Kali.
-          </p>
-        </Col>
-        <Col md="6">
-          <p>
-            <img
-              alt="initial_menu"
-              width="100%"
-              height="100%"
-              src={cf_ssh}
-            ></img>
-          </p>
-        </Col>
-      </Row>
-      <Row>
-        <Col md="6">
-          <p>
-            <img
-              alt="initial_menu"
-              width="100%"
-              height="100%"
-              src={cf_owasp_juice_shop}
-            ></img>
-          </p>
-        </Col>
-        <Col md="6">
-          <p>
-            Also, from the output you could easily find the address to connect
+            You did it! The output will give details on how to use each VM. If desired, you could follow the
+            instructions on Step 6 to have a full GUI on your Kali VM. Also, from the output you could easily find the address to connect
             to the OWASP Juice VM, which has a full tutorial for learning how to
-            break WebApps and learning hacking techniques (Just remember that
-            it's running via http, not https!). The IP address of the vulnerable
-            VM is also included in the output. Have fun!
+            break WebApps and learning hacking techniques. Have fun!
           </p>
         </Col>
       </Row>
+  
       {/* ############## STEP FOUR - Deleting/Stoping/Restarting Instances  ####################### */}
       <Row>
         <center>

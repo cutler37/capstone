@@ -104,7 +104,7 @@ def main(createDestroy, stack_name='pentest-stack', template = './template.yaml'
                 stack_result = cf.create_stack(**params)
                 waiter = cf.get_waiter('stack_create_complete')
             print("Waiting for stack to be ready...")
-            print("It should take no more than 3 minutes. Please wait.")
+            print("It should take no more than 5 minutes. Please wait.")
             waiter.wait(StackName=stack_name)
         except botocore.exceptions.ClientError as ex:
             error_message = ex.response['Error']['Message']
@@ -122,11 +122,32 @@ def main(createDestroy, stack_name='pentest-stack', template = './template.yaml'
                 main('Delete')
             main_menu()             
         else:
-            print(json.dumps(
-                cf.describe_stacks(StackName=stack_result['StackId']),
-                indent=2,
-                default=json_serial
-            ))
+            cloudformation = boto3.resource('cloudformation')
+            stack = cloudformation.Stack('pentest-stack')   
+            offensive_ip = ''
+            vulnerable_ip = ''
+            tutorial_ip = ''
+            print()
+            print('Your VMs are ready!')
+            for output in stack.outputs:
+                if output['OutputKey'] == 'PublicIP':
+                    offensive_ip = output['OutputValue']
+                    print('- Your Offensive IP: ' + offensive_ip)
+                    print('Connect to the VM by typing: ssh -i \"python_keypair.pem\" kali@' + offensive_ip)
+                    print()
+                elif output['OutputKey'] == 'PublicIP2':
+                    vulnerable_ip = output['OutputValue']
+                    print('- Your Vulnerable IP: ' + vulnerable_ip)
+                    print('If you need to SSH into the box, just type: ssh -i \"python_keypair.pem\" ubuntu@' + vulnerable_ip)
+                    print()
+                elif output['OutputKey'] == 'PublicIP3':
+                    tutorial_ip = output['OutputValue']
+                    print('- Your WebApp Address: http://' + tutorial_ip)
+                    print('Ps. You may need to wait 1 more minute until the site is ready!')
+                    print()
+            print('Don\'t forget to delete or stop your instances after you are done!')
+            print('Just run the script again: \"python3 oneclick.py\", and select the proper option.')
+
     ##### DELETE STACKS #####
     elif createDestroy == 'Delete':
         try:
@@ -170,7 +191,6 @@ def build_json():
     attackVMAMI = 'ami-06fd113e1286dd166'
     attackVMSize = 't2.micro'
     vulnVMAMI = 'ami-03ea1121e147b22b9'
-    storage = '30'
 
     #SELECT ATTACK VM 
     print('\nWe offer 3 different VMs that you can use to attack your vulnerable VMs.')
@@ -210,22 +230,6 @@ def build_json():
     else: 
         print('Invalid input. Exiting.')
         exit()
-
-    #SELECT STORAGE SIZE TO CONNECT TO YOUR ATTACK VM
-    print('\nEnter in the storage size to attach to your attack VM.')
-    print('Remember the more storage you use the more it costs you.')
-    print('In addition, Depending on the different VM types you selected.')
-    print('You will be required to add a minumium amount of memory to an instance.')
-    print('For instance Kali Linux you have to have atleast 12GiB, Parrot is 30GiB, and Pentoo is 20GiB.')
-    print('If you are on the free tier you get to use about 30GiB to use a month, anything above 30GiB is about $0.10 per GiB.')
-    print('Price estimate 2/25/2022.\n')
-    storageAmount = input("\nHow much memory (GiB) would you like to attach: >>> ")
-    while storageAmount.isdigit()==False:
-        storageAmount = input("Enter a positive number: ")
-        if storageAmount.isdigit()==False:
-            print("Invalid input. ")
-        else:
-            continue
 
     #SELECT VULNERABLE MACHINE TO HACK
     print('\nAmazon offers various vulnerable machines to hack.')
@@ -281,7 +285,6 @@ def build_json():
             "ParameterKey": "VulnImageId",
             "ParameterValue": vulnVMAMI
         },
-        # THIS NEEDS TO BE ADDED ALSO MAYBE ADD ANOTHER VULN IMAGE OPTION"storage": storage
     ]
 
     json_string = json.dumps(data)
@@ -328,8 +331,3 @@ def json_serial(obj):
 if __name__ == '__main__':
     print("================== Welcome ===================")
     main_menu()
-
-# Next iteration and final steps:
-    # - Update script and template to include storage option as a paramater;
-    # - Print only Offensive IP, Vulnerable IP, and Tutorial IP. Not sure if we should describe the whole stack
-    # - Implement suggestions from in-class progress report

@@ -150,6 +150,7 @@ Resources:
         IpProtocol: '-1'
         FromPort: '-1'
         ToPort: '-1'
+        CidrIp: 0.0.0.0/0 
       Tags:
         - Key:  Name
           Value:  pentest-vuln-sg
@@ -265,50 +266,19 @@ Resources:
           - Key: Pentest
             Value: pentest-stack
             
-
 Outputs:
-  VpcID:
-    Description: A reference to the created VPC
-    Value: !Ref VPC
-  PublicSubnetID:
-    Description: A reference to the public subnet
-    Value: !Ref PublicSubnet1
-  InstanceId:
-    Description: InstanceId of the offensive EC2 instance
-    Value: !Ref AttackVmEc2
-  PublicDNS:
-    Description: Public DNS Name of the Offensive EC2 instance
-    Value: !GetAtt 
-      - AttackVmEc2
-      - PublicDnsName
   PublicIP:
-    Description: Public IP address of the offensive EC2 instance
+    Description: Offensive (Kali by default) IP address.
     Value: !GetAtt 
       - AttackVmEc2
       - PublicIp
-  InstanceId2:
-    Description: InstanceId of the vulnerable EC2 instance
-    Value: !Ref VulnVmEc2
-  PublicDNS2:
-    Description: Public DNS Name of the vulnerable EC2 instance
-    Value: !GetAtt 
-      - VulnVmEc2
-      - PublicDnsName
   PublicIP2:
-    Description: Public IP address of the vulnerable EC2 instance
+    Description: Vulnerable (Metasploitable2 by default) IP address
     Value: !GetAtt 
       - VulnVmEc2
       - PublicIp
-  InstanceId3:
-    Description: InstanceId of the WebApp EC2 instance
-    Value: !Ref WebServerVmEc2
-  PublicDNS3:
-    Description: Public DNS Name of the WebApp EC2 instance
-    Value: !GetAtt 
-      - WebServerVmEc2
-      - PublicDnsName
   PublicIP3:
-    Description: Public IP address of the WebApp EC2 instance
+    Description: WebApp (Owasp Juice Shop by default) IP address - Use port 80 (http)
     Value: !GetAtt 
       - WebServerVmEc2
       - PublicIp

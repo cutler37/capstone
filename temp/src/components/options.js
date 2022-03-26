@@ -49,7 +49,7 @@ function App() {
                 <Col md='6'>
                    <center>
                         <h3>
-                            Cloud Formation
+                            Python
                         </h3>
                     </center>
                     <br></br>
@@ -58,15 +58,9 @@ function App() {
                             <Button>Tutorial</Button>
                         </Link>
                         &emsp;
-                        <Link to="/downloads/variables.json" target="_blank" download>
+                        <Link to="/downloads/cfVulnInfrastrucure.zip" target="_blank" download>
                             <Button>
-                                variables.json
-                            </Button>
-                        </Link>
-                        &emsp;
-                        <Link to="/downloads/vulnInfrastructure.zip" target="_blank" download>
-                            <Button>
-                                python.zip
+                            cfVulnInfrastrucure.zip
                             </Button>
                         </Link>
                     </center>
