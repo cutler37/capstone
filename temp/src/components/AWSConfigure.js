@@ -23,7 +23,7 @@ function App() {
             To do this we will want to create a new user in the IAM section of aws with programatic access. 
           </p>
           <p>
-            To start off with find the IAM by searching for it in AWS.
+            To start off with find the <span className='bold'>IAM by searching for it in AWS dashboard.</span>
           </p>
         </Col>
         <Col md='6'>
@@ -41,7 +41,7 @@ function App() {
         <Col md='6'>
         <br></br><br></br><br></br>
           <p>
-            Go to Users on the IAM dashboard
+          <span className='bold'>Go to Users on the IAM dashboard</span>
           </p>
         </Col>
       </Row>
@@ -49,7 +49,7 @@ function App() {
         <Col md='6'>
           <br></br><br></br><br></br>
           <p>
-            Click add users on this page
+          <span className='bold'>Click add users on this page</span>
           </p>
         </Col>
         <Col md='6'>
@@ -67,7 +67,7 @@ function App() {
         <Col md='6'>
         <br></br><br></br><br></br>
           <p>
-            Create a unique Username for you're user and make sure to select programatic access when selecting AWS access type, then click the Next: Permissions button at the bottom of the page.
+          <span className='bold'>Create a unique Username for your user</span> and make sure to <span className='bold'>select programatic access when selecting AWS access type</span>, then <span className='bold'>click the Next: Permissions button </span> at the bottom of the page.
           </p>
         </Col>
       </Row>
@@ -75,10 +75,10 @@ function App() {
         <Col md='6'>
           <br></br><br></br><br></br>
           <p>
-            At the top of this page click Attach existing policies directly.
+            At the top of this page <span className='bold'>click Attach existing policies directly.</span>
           </p>
           <p>
-            A large box will policies will then appear below. Select the box for Administrator Access like the image shows. 
+            A large box will policies will then appear below. <span className='bold'>Select the box for Administrator Access like the image shows.</span>
           </p>
           <p>
             Click 'Next: Tags' to move on and add tags if you wish. However, this is optional. Click 'Next: Review' and then 'Create User' after making sure everything on this review is correct.
@@ -99,7 +99,7 @@ function App() {
         <Col md='6'>
         <br></br><br></br><br></br>
           <p>
-            After you create the user you will be driven to a page similiar to this. Copy the Access key ID and secret access key to somewhere secure. 
+            After you create the user you will be driven to a page similiar to this. <span className='bold'>Copy the Access key ID and secret access key to somewhere secure. </span>
           </p>
         </Col>
       </Row>
@@ -107,7 +107,7 @@ function App() {
         <Col md='6'>
         <br></br><br></br><br></br>
           <p>
-            Finally, open up your terminal on your computer, and type "aws configure". It will ask you for to enter your AWS Access Key ID and your AWS Secret Access Key. Enter the keys you got for the user you created on AWS in these spots. When it asks you for a default region feel free to use us-east-1 or you can bypass these steps by just clicking enter through the next two questions.  
+            Finally, <span className='bold'>open up your terminal on your computer, and type "aws configure".</span> It will ask you for to enter your AWS Access Key ID and your AWS Secret Access Key. <span className='bold'>Enter the keys you got for the user you created on AWS in these spots.</span> When it asks you for a <span className='bold'>default region we recommend entering "us-east-1"</span> but feel free to enter in a different region.  
           </p>
         </Col>
         <Col md='6'>

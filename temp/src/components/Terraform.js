@@ -17,6 +17,7 @@ import envVar from '../images/envVars.png'
 import envVarPath from '../images/envVarsPath.png'
 import envVarPathEdit from '../images/envVarsPathEdit.png'
 import terraformInit from '../images/terraforminit.png'
+import './terraform.css'
 function App() {
 
   return (
@@ -33,7 +34,7 @@ function App() {
             Before you begin, make sure you have a valid aws account. We will not charge you for any services, but the services you set up via the script on the cloud may charge you for certain options you select. None of the money you pay will go to us, it will go to aws, where the services are being hosted. All scripts on this site are free to use. 
           </p>
           <p>
-            1) To begin this setup. You will need to download <a href="https://www.terraform.io/" target="_blank">Terraform</a>. Go to this website and download Terraform for your device. The Terraform Download page is found here: <a href="https://www.terraform.io/downloads">https://www.terraform.io/downloads</a>
+            1) To begin this setup. You will need to download <a href="https://www.terraform.io/" target="_blank">Terraform</a>. <span className='bold'>Go to this website and download Terraform for your device.</span> The Terraform Download page is found here: <a href="https://www.terraform.io/downloads">https://www.terraform.io/downloads</a>
           </p>
           
         </Col>
@@ -41,7 +42,7 @@ function App() {
       <Row>
         <Col md='6'>
           <p>
-            1a) You will probably need to add the terraform executable to your system "PATH" environment variables. You can do this on Windows by searching for environment variables on your Windows search window. Click edit on user variables while clicking on path. Then select new and paste the path to the folder containing the terraform executable. The following pictures help demonstrate the process.
+            1a) [FOR WINDOWS USERS ONLY] You will probably need to add the terraform executable to your system "PATH" environment variables. You can do this on Windows by <span className='bold'>searching for environment variables on your Windows search window.</span> <span className='bold'>Click edit on user variables while clicking on the already declared PATH variable.</span> Then <span className='bold'>select new and paste the path</span> to the folder containing the terraform executable. The following pictures help demonstrate the process.
           </p>
         </Col>
         <Col md='6'>
@@ -58,7 +59,7 @@ function App() {
       </Row>
       <Row>
         <p>
-          2) The second step to launching this online infrastructure is to download and configure your aws CLI. If you have already set it up then skip step 2 and step 3. To download the aws cli for windows click <a href="https://awscli.amazonaws.com/AWSCLIV2.msi">here</a> or for mac go <a href="https://awscli.amazonaws.com/AWSCLIV2.pkg">here </a>. Alternatively you can find AWS CLI for your OS here at this <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">website</a>.
+          2) The second step to launching this online infrastructure is to <span className='bold'>download and configure your aws CLI.</span> If you have already set it up then skip step 2 and step 3. To download the aws cli for windows click <a href="https://awscli.amazonaws.com/AWSCLIV2.msi">here</a> or for mac go <a href="https://awscli.amazonaws.com/AWSCLIV2.pkg">here </a>. Alternatively you can find AWS CLI for your OS here at this <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">website</a>.
         </p>
       </Row>
       <br></br>
@@ -71,7 +72,7 @@ function App() {
       <br></br>
       <Row>  
         <p>
-          4) Now that the setup of AWS and TerraForm is complete, you will need the two files in which to launch the aws environment from. The vulnInfrastructure.zip file that contains the code to launch the VMs in the AWS environment and the variables.json that tells the script what machines and other settings you'd like to use in your virtual environment. You can download the default script and variables below. However, if you want to create a different environment than provided utilize the form in step 5 to create your own variables.json file. If you just want to use the tested and recommended settings, skip step 5 and download the scripts provided below. If you utilize other VMs remember that this tutorial may not be able to help you as it is made to specifically install and run Kali.
+          4) Now that the setup of AWS and TerraForm is complete, you will need the two files in which to launch the aws environment from. The vulnInfrastructure.zip file that contains the code to launch the VMs in the AWS environment and the variables.json that tells the script what machines and other settings you'd like to use in your virtual environment. <span className='bold'>You can download the default script and variables below.</span> However, if you want to create a different environment than provided utilize the form in step 5 to create your own variables.json file. <span className='bold'>If you just want to use the tested and recommended settings, skip step 5 and download the scripts provided below.</span> If you utilize other VMs remember that this tutorial may not be able to help you as it is made to specifically install and run Kali.
         </p>
       </Row>
       <Row>
@@ -87,7 +88,7 @@ function App() {
       <Row>
         <Col>
           <p>
-            5) Step 5 is only utilized to customize your environment. Instead of using the variables.json above this form will create a custom one for you. Be alert on your selections though, because based on your selections the price AWS will change. We will try to provide pricing help but it is not always 100% accurate. You can always go check out the prices aws provides <a href="https://calculator.aws/#/">here</a>. All prices we show are estimates and could be wrong.
+            5) [OPTIONAL] Step 5 is only utilized to customize your environment. <span className='bold'>Instead of using the variables.json above this form will create a custom one for you.</span> Be alert on your selections though, because based on your selections the price AWS will change. We will try to provide pricing help but it is not always 100% accurate. You can always go check out the prices aws provides <a href="https://calculator.aws/#/">here</a>. All prices we show are estimates and could be wrong.
           </p>
           <br></br>    
           <SelectionForm></SelectionForm>
@@ -99,7 +100,7 @@ function App() {
         <Col md='6'>
           <br></br>
           <p>
-            6) Now that you have all your files make sure they are all in the same directory and unzip vulnInfrastructure.zip. You do not need to unzip ec2_lambda_handler.zip. Your folder should look like the image here:
+            6) Now that you have all your files<span className='bold'> make sure your files are all in the same directory and unzip vulnInfrastructure.zip.</span> <span className='bold'> You do not need to unzip ec2_lambda_handler.zip.</span> Your folder should look like the image here:
           </p>    
         </Col>
         <Col md='6'>
@@ -111,7 +112,8 @@ function App() {
         <Col >
           <br></br>
           <p>
-            7) Now that the files are ready we are ready to execute the stript from the commandline using Terraform. To do this open the commandline on your device and navigate to the directory containing the script and variables. You can also just open the commandline by typing 'cmd' (for windows) in the file explorer path. Long story short as long as you navigate to the place where your files are you should be fine. 
+            7) Now that the files are ready we are ready to execute the stript from the commandline using Terraform. To do this<span className='bold'> open the commandline on your device and navigate to the directory containing the script and variables.</span> 
+            {/* You can also just open the commandline by typing 'cmd' (for windows) in the file explorer path. Long story short as long as you navigate to the place where your files are you should be fine.  */}
           </p>
         </Col>
       </Row>
@@ -120,7 +122,7 @@ function App() {
         <Col md='6'>
           <br></br>
           <p>
-            8) Next type the following command to start up terraform: 'terraform init' 
+            8) Next <span className='bold'>type the following command to start up terraform: 'terraform init' </span>
             <br></br>
             you should see results similiar to the screenshot to the right.
           </p>    
@@ -134,18 +136,20 @@ function App() {
         <Col>
           <br></br>
           <p>
-            9) After terraform is initilaized you are ready to launch the virtual environment. To do this use the command 'terraform apply'. It will ask if you are sure you'd like to make the following changes. Just type 'yes' and hit enter. 
-          </p>    
+            9) After terraform is initilaized you are ready <span className='bold'>to launch the virtual environment.</span> To do this <span className='bold'>use the command 'terraform apply'</span>. It will ask if you are sure you'd like to make the following changes. Just <span className='bold'>type 'yes' and hit enter. </span>
+          </p>   
+          <p>
+            If you receive a subscription error while deploying. Go to the aws kali linux marketplace page <a href="https://aws.amazon.com/marketplace/pp/prodview-fznsw3f7mq7to"> HERE</a> Click "Continue to Subscribe". Then under Kali Linux offer click: "Accept Terms". You should get a notification saying, "Thank you for subscribing to this product! We are processing your request." It may take a minute to process, but after it finishes processing just retype the command "terraform apply" and it should launch without a fault.</p> 
         </Col>
       </Row>
 {/* ################# STEP TEN ################### */}
       <Row>
         <br></br>
         <p>
-          10) After waiting a few minutes for the environment to deploy, make sure you have the following new files 'id_rsa', and 'ipAddresses'. The id_rsa is the private key of the keypair that you will use to connect with your Kali instance. You will do this the first time using SSH. Make sure that your command line is in the same file as the id_rsa file. Then use the following command: "ssh -i 'id_rsa' kali@(replace with static IP address found in the ipAddresses file)"
+          10) After waiting a few minutes for the environment to deploy, <span className='bold'>make sure you have the following new files 'id_rsa', and 'ipAddresses'.</span> The id_rsa is the private key of the keypair that you will use to connect with your Kali instance. You will do this the first time using SSH. Make sure that your command line is in the same file as the id_rsa file. <span className='bold'>Then use the following command: "ssh -i 'id_rsa' kali@(replace with static IP address found in the ipAddresses file)"</span>
         </p> 
         <p>
-          The Kali instance on AWS is not completely configured. In fact tools on this image is quite sparse to allow for customization and reduced image size. In order to to update kali and download missing tools you will need to run a few commands. These commands can take several minutes to run:
+          The Kali instance on AWS is not completely configured. In fact tools on this image is quite sparse to allow for customization and reduced image size. <span className='bold'>In order to to update kali and download missing tools you will need to run a few commands. These commands can take several minutes to run:</span>
           <ul>
             <li>I) sudo apt update</li>
             <li>II) sudo apt full-upgrade -y</li>
@@ -177,7 +181,7 @@ function App() {
             <li>c) terraform apply -destroy: destroys all infrastructure created by the terraform script.</li>
           </ul>
           <br></br>
-          In addition to deploying your Kali ec2 instances. This script deploys two simple lambda functions that help you to manage your ec2 instances. You can call function 'a' below to start your ec2 instances and look at its status in the status.json file at the end. Likewise for function 'b' you can use that command to temporarily stop your terraform ec2 instances (not destroy).
+          In addition to deploying your Kali ec2 instances. This script deploys two simple lambda functions that help you to manage your ec2 instances. <span className='bold'>You can call function 'a' below to start your ec2 instances</span> and look at its status in the status.json file at the end. Likewise for <span className='bold'>function 'b' you can use that command to temporarily stop your terraform ec2 instances (not destroy).</span>
           <ul>
             <li>a) aws lambda invoke --function-name 
 startEC2Lambda status.json</li>
