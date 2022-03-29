@@ -17,13 +17,12 @@ function App() {
       <Container>    <Row>
         <Col md='6'>
           <p>
-            3) The third step is to configure the aws terminal with your aws user. 
-          </p>
-          <p>  
-            To do this we will want to create a new user in the IAM section of aws with programatic access. 
-          </p>
-          <p>
-            To start off with find the <span className='bold'>IAM by searching for it in AWS dashboard.</span>
+            3) The third step is to configure the aws terminal with your aws user. To do this we will want to create a new user in the IAM section of aws with programatic access. To start:
+            <ul>
+              <li>Go to <a href="https://aws.amazon.com/" >AWS.com</a></li>
+              <li>Login to your account</li>
+              <li>Go to IAM (Type in Search bar)</li>
+            </ul>
           </p>
         </Col>
         <Col md='6'>
@@ -105,9 +104,16 @@ function App() {
       </Row>
       <Row>
         <Col md='6'>
-        <br></br><br></br><br></br>
+        <br></br>
           <p>
-            Finally, <span className='bold'>open up your terminal on your computer, and type "aws configure".</span> It will ask you for to enter your AWS Access Key ID and your AWS Secret Access Key. <span className='bold'>Enter the keys you got for the user you created on AWS in these spots.</span> When it asks you for a <span className='bold'>default region we recommend entering "us-east-1"</span> but feel free to enter in a different region.  
+            Finally:  
+            <ul>
+              <li>open up your terminal on your computer, and type "aws configure"</li>
+              <li>Enter your AWS Access Key ID</li>
+              <li>Enter your AWS Secret Access Key</li>
+              <li>Enter "us-east-1" for default region</li>
+              <li>Leave the Output format empty</li>
+            </ul>
           </p>
         </Col>
         <Col md='6'>

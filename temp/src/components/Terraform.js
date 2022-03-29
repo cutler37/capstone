@@ -42,7 +42,15 @@ function App() {
       <Row>
         <Col md='6'>
           <p>
-            1a) [FOR WINDOWS USERS ONLY] You will probably need to add the terraform executable to your system "PATH" environment variables. You can do this on Windows by <span className='bold'>searching for environment variables on your Windows search window.</span> <span className='bold'>Click edit on user variables while clicking on the already declared PATH variable.</span> Then <span className='bold'>select new and paste the path</span> to the folder containing the terraform executable. The following pictures help demonstrate the process.
+            1a) [FOR WINDOWS USERS ONLY] You will probably need to add the terraform executable to your system "PATH" environment variables. The following pictures help demonstrate the process.
+          </p>
+          <p>
+            <ul>
+              <li>You can do this on Windows by searching for environment variables on your Windows search bar</li>
+              <li>Click environment variables</li>
+              <li>Click edit on user variables while clicking on the already declared Path variable</li>
+              <li>Then select new and paste the path to the folder containing the terraform executable</li>
+            </ul>
           </p>
         </Col>
         <Col md='6'>
@@ -59,7 +67,7 @@ function App() {
       </Row>
       <Row>
         <p>
-          2) The second step to launching this online infrastructure is to <span className='bold'>download and configure your aws CLI.</span> If you have already set it up then skip step 2 and step 3. To download the aws cli for windows click <a href="https://awscli.amazonaws.com/AWSCLIV2.msi">here</a> or for mac go <a href="https://awscli.amazonaws.com/AWSCLIV2.pkg">here </a>. Alternatively you can find AWS CLI for your OS here at this <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">website</a>.
+          2) The second step to launching this online infrastructure is to <span className='bold'>download and configure your aws CLI.</span> If you have already set it up then skip step 2 and step 3. To <span className='bold'>download the aws cli for windows click <a href="https://awscli.amazonaws.com/AWSCLIV2.msi">here</a> or for mac go <a href="https://awscli.amazonaws.com/AWSCLIV2.pkg">here </a></span>. Alternatively you can find AWS CLI for your OS here at this <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">website</a>.
         </p>
       </Row>
       <br></br>
@@ -88,7 +96,7 @@ function App() {
       <Row>
         <Col>
           <p>
-            5) [OPTIONAL] Step 5 is only utilized to customize your environment. <span className='bold'>Instead of using the variables.json above this form will create a custom one for you.</span> Be alert on your selections though, because based on your selections the price AWS will change. We will try to provide pricing help but it is not always 100% accurate. You can always go check out the prices aws provides <a href="https://calculator.aws/#/">here</a>. All prices we show are estimates and could be wrong.
+            5) <span className='bold'>[OPTIONAL]</span> Step 5 is only utilized to customize your environment. <span className='bold'>Instead of using the variables.json above this form will create a custom one for you.</span> Be alert on your selections though, because based on your selections the price AWS will change. We will try to provide pricing help but it is not always 100% accurate. You can always go check out the prices aws provides <a href="https://calculator.aws/#/">here</a>. All prices we show are estimates and could be wrong.
           </p>
           <br></br>    
           <SelectionForm></SelectionForm>
@@ -138,8 +146,15 @@ function App() {
           <p>
             9) After terraform is initilaized you are ready <span className='bold'>to launch the virtual environment.</span> To do this <span className='bold'>use the command 'terraform apply'</span>. It will ask if you are sure you'd like to make the following changes. Just <span className='bold'>type 'yes' and hit enter. </span>
           </p>   
-          <p>
-            If you receive a subscription error while deploying. Go to the aws kali linux marketplace page <a href="https://aws.amazon.com/marketplace/pp/prodview-fznsw3f7mq7to"> HERE</a> Click "Continue to Subscribe". Then under Kali Linux offer click: "Accept Terms". You should get a notification saying, "Thank you for subscribing to this product! We are processing your request." It may take a minute to process, but after it finishes processing just retype the command "terraform apply" and it should launch without a fault.</p> 
+          <p>If you receive a subscription error while deploying:
+            <ul>
+              <li>Go to the aws kali linux marketplace page <a href="https://aws.amazon.com/marketplace/pp/prodview-fznsw3f7mq7to"> HERE</a></li>
+              <li>Click "Continue to Subscribe"</li>
+              <li>Then under Kali Linux offer click: "Accept Terms"</li>
+              <li>You should get a notification saying, "Thank you for subscribing to this product! We are processing your request."</li>
+              <li> It may take a minute to process, but after it finishes processing just retype the command "terraform apply" and it should launch without an error</li>
+            </ul>
+          </p>
         </Col>
       </Row>
 {/* ################# STEP TEN ################### */}
@@ -148,6 +163,26 @@ function App() {
         <p>
           10) After waiting a few minutes for the environment to deploy, <span className='bold'>make sure you have the following new files 'id_rsa', and 'ipAddresses'.</span> The id_rsa is the private key of the keypair that you will use to connect with your Kali instance. You will do this the first time using SSH. Make sure that your command line is in the same file as the id_rsa file. <span className='bold'>Then use the following command: "ssh -i 'id_rsa' kali@(replace with static IP address found in the ipAddresses file)"</span>
         </p> 
+        <p>[WINDOWS] If you are receiving a permissions error:
+          <ul>
+            <li>Right-click on the id_rsa file</li>
+            <li>Click Properties</li>
+            <li>Go to security</li>
+            <li>Click Advanced</li>
+            <li>Click Disable Inheritance and Remove inherited permissions</li>
+            <li>Then click add </li>
+            <li>select a principal </li>
+            <li>type in your user </li>
+            <li>check the box Read and Execute, Read, and Write</li>
+            <li>then confirm and exit clicking okay </li>
+          </ul>
+        </p>
+        <p>[MAC/LINUX] If you are receiving a permissions error:
+          <ul>
+            <li>Exit the script</li>
+            <li>In terminal type chmod 0400 ./id_rsa ( make sure you are in the correct folder)</li>
+          </ul>
+        </p>
         <p>
           The Kali instance on AWS is not completely configured. In fact tools on this image is quite sparse to allow for customization and reduced image size. <span className='bold'>In order to to update kali and download missing tools you will need to run a few commands. These commands can take several minutes to run:</span>
           <ul>
