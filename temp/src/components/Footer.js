@@ -13,8 +13,7 @@ function App(){
                 <span> Vulnerable Infrastructure in the Cloud</span>
             </div>
             <div>
-                <span>powered by-</span>
-                <a href='facebook.com'>React</a>
+               
             </div>
         </footer>
     </div>

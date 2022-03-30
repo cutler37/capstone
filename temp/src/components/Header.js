@@ -12,7 +12,7 @@ function App() {
   return (
         <Navbar  expand="lg" className='headerBackground'>
         <Navbar.Brand href="/" >
-          <div className='BrandText'>
+          <div className='BrandText left'>
             Vulnerable Cloud Infrastructure
           </div>
           {/* <img alt ="logo" src={logo} className="imagess" width='20px' height='20px' alt="title"/> */}

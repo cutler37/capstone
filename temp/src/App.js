@@ -13,6 +13,7 @@ function App() {
 
   return (
     <Router>
+      <title>Vuln Cloud</title>
       <Container fluid className = "p-0 min-vh-100 d-flex flex-column">
         {/* ####### HEADER ######## */}
         <bs.Row >
