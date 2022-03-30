@@ -17,7 +17,7 @@ function App() {
       <Container>    <Row>
         <Col md='6'>
           <p>
-            3) The third step is to configure the aws terminal with your aws user. To do this we will want to create a new user in the IAM section of aws with programatic access. To start:
+            3) The third step is to configure the aws terminal with your aws user. To do this<span className='bold'> we will want to create a new user in the IAM section of aws</span> with programatic access. To start:
             <ul>
               <li>Go to <a href="https://aws.amazon.com/" >AWS.com</a></li>
               <li>Login to your account</li>
