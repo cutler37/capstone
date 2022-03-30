@@ -30,17 +30,30 @@ function App() {
           <center>
             <h1><span class="white1">Terraform Tutorial</span></h1>
           </center>
+          <br/><br/>
           <p>
             Before you begin, make sure you have a valid aws account. We will not charge you for any services, but the services you set up via the script on the cloud may charge you for certain options you select. None of the money you pay will go to us, it will go to aws, where the services are being hosted. All scripts on this site are free to use. 
           </p>
-          <p>
-            1) To begin this setup. You will need to download <a href="https://www.terraform.io/" target="_blank">Terraform</a>. <span className='bold'>Go to this website and download Terraform for your device.</span> The Terraform Download page is found here: <a href="https://www.terraform.io/downloads">https://www.terraform.io/downloads</a>
-          </p>
+        
           
         </Col>
       </Row>
       <Row>
+        <Col md="12">
+          <center>
+            <br/>
+            <h3>Step-by-Step Video Tutorial</h3>
+            <br/>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/5JD-scxEg1E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </center>
+          <br/><br/>
+        </Col>
+      </Row>
+      <Row>
         <Col md='6'>
+        <p>
+            1) To begin this setup. You will need to download <a href="https://www.terraform.io/" target="_blank">Terraform</a>. <span className='bold'>Go to this website and download Terraform for your device.</span> The Terraform Download page is found here: <a href="https://www.terraform.io/downloads">https://www.terraform.io/downloads</a>
+          </p>
           <p>
             1a) [FOR WINDOWS USERS ONLY] You will probably need to add the terraform executable to your system "PATH" environment variables. The following pictures help demonstrate the process.
           </p>

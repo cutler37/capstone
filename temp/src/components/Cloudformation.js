@@ -53,6 +53,17 @@ function App() {
           </p>
         </Col>
       </Row>
+
+      <Row>
+        <Col md="12">
+          <center>
+            <br/>
+            <h3>Step-by-Step Video Tutorial</h3>
+            <br/>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/C4ascI65PjI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </center>
+        </Col>
+      </Row>
       {/* ############## STEP ONE - Downloading and Configuring AWS CLI ####################### */}
       <Row>
         <center>
